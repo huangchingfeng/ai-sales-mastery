@@ -205,8 +205,24 @@ p { color: var(--gray-600); }
 .hero-desc {
     font-size: clamp(1.125rem, 2vw, 1.25rem);
     max-width: 550px;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
     line-height: 1.7;
+}
+
+.hero-highlight {
+    max-width: 550px;
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--gray-50);
+    border-left: 4px solid var(--black);
+    border-radius: 8px;
+}
+
+.hero-highlight p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--black);
+    margin: 0;
 }
 
 .btn-primary {
