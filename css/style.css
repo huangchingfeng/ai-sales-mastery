@@ -212,17 +212,23 @@ p { color: var(--gray-600); }
 .hero-highlight {
     max-width: 550px;
     margin-bottom: var(--space-lg);
-    padding: var(--space-md);
-    background: var(--gray-50);
-    border-left: 4px solid var(--black);
-    border-radius: 8px;
+    padding: var(--space-sm) 0;
 }
 
 .hero-highlight p {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--black);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--gray-600);
     margin: 0;
+    font-style: italic;
+    letter-spacing: -0.01em;
+}
+
+.hero-highlight p::before {
+    content: "★ ";
+    color: var(--black);
+    font-style: normal;
+    margin-right: 4px;
 }
 
 .btn-primary {
