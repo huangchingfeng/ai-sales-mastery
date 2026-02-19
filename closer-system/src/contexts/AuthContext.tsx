@@ -19,11 +19,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // 5 秒超時保護：避免 Firebase 連線問題導致永久 loading
+    const timeout = setTimeout(() => {
+      if (loading) {
+        console.warn('[AuthContext] 5 秒超時，強制結束 loading 狀態');
+        setLoading(false);
+      }
+    }, 5000);
+
     const unsubscribe = onAuthStateChange((user) => {
+      clearTimeout(timeout);
       setUser(user);
       setLoading(false);
     });
-    return () => unsubscribe();
+
+    return () => {
+      clearTimeout(timeout);
+      unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {

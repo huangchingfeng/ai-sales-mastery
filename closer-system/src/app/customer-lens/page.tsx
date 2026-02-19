@@ -111,13 +111,10 @@ export default function CustomerLensPage() {
 - 我的核心優勢：${userProfile.productAdvantage || '（請在 Content Clone 模組填寫）'}
 - 我的成功案例：${userProfile.catchphrases || '（可在 Content Clone 模組填寫）'}
 
-===== 需要分析的客戶資料 =====
-- 客戶官網：${formData.targetCompanyWebsite || '（請貼上網址）'}
-- 客戶年報/新聞：${formData.targetCompanyNewsUrl || '（選填）'}
-- 決策者 LinkedIn：${formData.decisionMakerLinkedIn || '（選填）'}
+===== 會議資訊 =====
 - 預計會議時間：${formData.meetingDateTime || '（選填）'}
 
-請根據上傳的資料填入，如果資料不足，請標註「資料不足，建議補充」。`;
+請根據上傳到 NotebookLM 的客戶資料（官網、年報、LinkedIn 等）填入以上欄位。如果資料不足，請標註「資料不足，建議補充」。`;
 
     setGeneratedPrompt(prompt);
   };
@@ -161,10 +158,11 @@ export default function CustomerLensPage() {
 
 ===== 目標客戶資訊 =====
 - 客戶公司：${formData.targetCompanyName || '（請填入）'}
-- 客戶官網：${formData.targetCompanyWebsite || '（請貼上網址）'}
 - 客戶產業：${formData.targetIndustry || '（請選擇）'}
 - 客戶角色：${formData.targetRole || '（例：採購、IT、財務、行銷）'}
-- 公司規模：${formData.targetCompanySize || '（例：50人、500人、5000人以上）'}`;
+- 公司規模：${formData.targetCompanySize || '（例：50人、500人、5000人以上）'}
+
+請根據上傳到 NotebookLM 的客戶資料（官網、年報等）進行分析。`;
 
     setGeneratedPrompt(prompt);
   };
@@ -267,7 +265,7 @@ export default function CustomerLensPage() {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">{t.common.loading}</div>
+          <div role="status" aria-label="Loading" className="text-gray-500">{t.common.loading}</div>
         </div>
       </DashboardLayout>
     );
@@ -285,8 +283,11 @@ export default function CustomerLensPage() {
         {/* Tab 切換 */}
         <div className="bg-white rounded-lg shadow-sm mb-6">
           <div className="border-b border-gray-200">
-            <nav className="flex -mb-px">
+            <nav className="flex -mb-px" role="tablist" aria-label="Customer Lens tabs">
               <button
+                role="tab"
+                aria-selected={activeTab === 'infoCard'}
+                aria-controls="tabpanel-infoCard"
                 onClick={() => handleTabChange('infoCard')}
                 className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'infoCard'
@@ -298,6 +299,9 @@ export default function CustomerLensPage() {
                 {t.customerLens.tabs.infoCard}
               </button>
               <button
+                role="tab"
+                aria-selected={activeTab === 'painPoints'}
+                aria-controls="tabpanel-painPoints"
                 onClick={() => handleTabChange('painPoints')}
                 className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'painPoints'
@@ -309,6 +313,9 @@ export default function CustomerLensPage() {
                 {t.customerLens.tabs.painPoints}
               </button>
               <button
+                role="tab"
+                aria-selected={activeTab === 'meetingPrep'}
+                aria-controls="tabpanel-meetingPrep"
                 onClick={() => handleTabChange('meetingPrep')}
                 className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
                   activeTab === 'meetingPrep'
@@ -326,7 +333,7 @@ export default function CustomerLensPage() {
           <div className="p-6">
             {/* 情報卡 Tab */}
             {activeTab === 'infoCard' && (
-              <div className="space-y-6">
+              <div id="tabpanel-infoCard" role="tabpanel" aria-labelledby="tab-infoCard" className="space-y-6">
                 <div>
                   <h2 className="text-lg font-semibold text-gray-900 mb-1">
                     {t.customerLens.infoCard.title}
@@ -336,92 +343,80 @@ export default function CustomerLensPage() {
                   </p>
                 </div>
 
+                {/* NotebookLM 上傳說明 */}
+                <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                  <h3 className="text-sm font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                    <span>📤</span>
+                    {t.customerLens.uploadGuide?.title || '請先上傳以下資料到 NotebookLM'}
+                  </h3>
+                  <ul className="text-sm text-amber-700 space-y-1 ml-6 list-disc">
+                    <li>{t.customerLens.uploadGuide?.website || '客戶官網網址'}</li>
+                    <li>{t.customerLens.uploadGuide?.annualReport || '客戶年報 / 新聞網址（選填）'}</li>
+                    <li>{t.customerLens.uploadGuide?.linkedin || '決策者 LinkedIn 頁面（選填）'}</li>
+                  </ul>
+                  <a
+                    href="https://notebooklm.google.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-amber-800 hover:text-amber-900"
+                  >
+                    {t.customerLens.result?.openNotebookLM || '開啟 NotebookLM'}
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="info-company" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.infoCard.company}
                     </label>
                     <input
+                      id="info-company"
                       type="text"
                       value={formData.targetCompanyName}
                       onChange={(e) => updateField('targetCompanyName', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder={t.customerLens.infoCard.companyPlaceholder}
+                      maxLength={100}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="info-customer-name" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.infoCard.customerName}
                     </label>
                     <input
+                      id="info-customer-name"
                       type="text"
                       value={formData.decisionMakerName}
                       onChange={(e) => updateField('decisionMakerName', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder={t.customerLens.infoCard.customerNamePlaceholder}
+                      maxLength={100}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.customerLens.infoCard.websiteUrl}
+                  <label htmlFor="info-meeting-time" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t.customerLens.infoCard.meetingTime}
                   </label>
                   <input
-                    type="url"
-                    value={formData.targetCompanyWebsite}
-                    onChange={(e) => updateField('targetCompanyWebsite', e.target.value)}
+                    id="info-meeting-time"
+                    type="datetime-local"
+                    value={formData.meetingDateTime}
+                    onChange={(e) => updateField('meetingDateTime', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder={t.customerLens.infoCard.websiteUrlPlaceholder}
                   />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    {t.customerLens.infoCard.newsUrl}{t.customerLens.infoCard.newsUrlOptional}
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.targetCompanyNewsUrl}
-                    onChange={(e) => updateField('targetCompanyNewsUrl', e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="https://www.example.com/news"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.customerLens.infoCard.linkedinUrl}
-                    </label>
-                    <input
-                      type="url"
-                      value={formData.decisionMakerLinkedIn}
-                      onChange={(e) => updateField('decisionMakerLinkedIn', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder={t.customerLens.infoCard.linkedinUrlPlaceholder}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.customerLens.infoCard.meetingTime}
-                    </label>
-                    <input
-                      type="datetime-local"
-                      value={formData.meetingDateTime}
-                      onChange={(e) => updateField('meetingDateTime', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  </div>
                 </div>
               </div>
             )}
 
             {/* 痛點對照表 Tab */}
             {activeTab === 'painPoints' && (
-              <div className="space-y-6">
+              <div id="tabpanel-painPoints" role="tabpanel" aria-labelledby="tab-painPoints" className="space-y-6">
                 <div>
                   <h2 className="text-lg font-semibold text-gray-900 mb-1">
                     {t.customerLens.painPoints.title}
@@ -431,40 +426,52 @@ export default function CustomerLensPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.customerLens.infoCard.company}
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.targetCompanyName}
-                      onChange={(e) => updateField('targetCompanyName', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder={t.customerLens.infoCard.companyPlaceholder}
-                    />
-                  </div>
+                {/* NotebookLM 上傳說明 */}
+                <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                  <h3 className="text-sm font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                    <span>📤</span>
+                    {t.customerLens.uploadGuide?.title || '請先上傳以下資料到 NotebookLM'}
+                  </h3>
+                  <ul className="text-sm text-amber-700 space-y-1 ml-6 list-disc">
+                    <li>{t.customerLens.uploadGuide?.website || '客戶官網網址'}</li>
+                    <li>{t.customerLens.uploadGuide?.annualReport || '客戶年報 / 新聞網址（選填）'}</li>
+                    <li>{t.customerLens.uploadGuide?.linkedin || '決策者 LinkedIn 頁面（選填）'}</li>
+                  </ul>
+                  <a
+                    href="https://notebooklm.google.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-amber-800 hover:text-amber-900"
+                  >
+                    {t.customerLens.result?.openNotebookLM || '開啟 NotebookLM'}
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      {t.customerLens.infoCard.websiteUrl}
-                    </label>
-                    <input
-                      type="url"
-                      value={formData.targetCompanyWebsite}
-                      onChange={(e) => updateField('targetCompanyWebsite', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder={t.customerLens.infoCard.websiteUrlPlaceholder}
-                    />
-                  </div>
+                <div>
+                  <label htmlFor="pain-company" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t.customerLens.infoCard.company}
+                  </label>
+                  <input
+                    id="pain-company"
+                    type="text"
+                    value={formData.targetCompanyName}
+                    onChange={(e) => updateField('targetCompanyName', e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder={t.customerLens.infoCard.companyPlaceholder}
+                    maxLength={100}
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="pain-industry" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.painPoints.industry}
                     </label>
                     <select
+                      id="pain-industry"
                       value={formData.targetIndustry}
                       onChange={(e) => updateField('targetIndustry', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -479,28 +486,32 @@ export default function CustomerLensPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="pain-role" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.painPoints.role}
                     </label>
                     <input
+                      id="pain-role"
                       type="text"
                       value={formData.targetRole}
                       onChange={(e) => updateField('targetRole', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder={t.customerLens.painPoints.rolePlaceholder}
+                      maxLength={100}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="pain-company-size" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.painPoints.companySize}
                     </label>
                     <input
+                      id="pain-company-size"
                       type="text"
                       value={formData.targetCompanySize}
                       onChange={(e) => updateField('targetCompanySize', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder={t.customerLens.painPoints.companySizePlaceholder}
+                      maxLength={100}
                     />
                   </div>
                 </div>
@@ -509,7 +520,7 @@ export default function CustomerLensPage() {
 
             {/* 會議速查 Tab */}
             {activeTab === 'meetingPrep' && (
-              <div className="space-y-6">
+              <div id="tabpanel-meetingPrep" role="tabpanel" aria-labelledby="tab-meetingPrep" className="space-y-6">
                 <div>
                   <h2 className="text-lg font-semibold text-gray-900 mb-1">
                     {t.customerLens.meetingPrep.title}
@@ -521,64 +532,73 @@ export default function CustomerLensPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="meeting-company" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.infoCard.company}
                     </label>
                     <input
+                      id="meeting-company"
                       type="text"
                       value={formData.targetCompanyName}
                       onChange={(e) => updateField('targetCompanyName', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder={t.customerLens.infoCard.companyPlaceholder}
+                      maxLength={100}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="meeting-customer-name" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.infoCard.customerName}
                     </label>
                     <input
+                      id="meeting-customer-name"
                       type="text"
                       value={formData.decisionMakerName}
                       onChange={(e) => updateField('decisionMakerName', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder={t.customerLens.infoCard.customerNamePlaceholder}
+                      maxLength={100}
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="meeting-type" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.meetingPrep.meetingType}
                     </label>
                     <input
+                      id="meeting-type"
                       type="text"
                       value={formData.meetingType}
                       onChange={(e) => updateField('meetingType', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder={t.customerLens.meetingPrep.meetingTypePlaceholder}
+                      maxLength={100}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="meeting-duration" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.meetingPrep.duration}
                     </label>
                     <input
+                      id="meeting-duration"
                       type="text"
                       value={formData.meetingDuration}
                       onChange={(e) => updateField('meetingDuration', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder={t.customerLens.meetingPrep.durationPlaceholder}
+                      maxLength={100}
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="meeting-datetime" className="block text-sm font-medium text-gray-700 mb-1">
                       {t.customerLens.infoCard.meetingTime}
                     </label>
                     <input
+                      id="meeting-datetime"
                       type="datetime-local"
                       value={formData.meetingDateTime}
                       onChange={(e) => updateField('meetingDateTime', e.target.value)}
@@ -588,15 +608,17 @@ export default function CustomerLensPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="meeting-objectives" className="block text-sm font-medium text-gray-700 mb-1">
                     {t.customerLens.meetingPrep.objectives}
                   </label>
                   <textarea
+                    id="meeting-objectives"
                     value={formData.meetingObjectives}
                     onChange={(e) => updateField('meetingObjectives', e.target.value)}
                     rows={3}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder={t.customerLens.meetingPrep.objectivesPlaceholder}
+                    maxLength={500}
                   />
                 </div>
               </div>
@@ -606,7 +628,12 @@ export default function CustomerLensPage() {
             <div className="mt-6 pt-6 border-t border-gray-100">
               <button
                 onClick={handleGenerate}
-                className="w-full md:w-auto px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                disabled={!formData.targetCompanyName}
+                className={`w-full md:w-auto px-6 py-3 font-medium rounded-lg transition-colors ${
+                  formData.targetCompanyName
+                    ? 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
               >
                 {activeTab === 'infoCard' && t.customerLens.infoCard.generate}
                 {activeTab === 'painPoints' && t.customerLens.painPoints.generate}
@@ -626,6 +653,7 @@ export default function CustomerLensPage() {
               <div className="flex gap-2">
                 <button
                   onClick={copyToClipboard}
+                  aria-label={t.customerLens.result.copyResult}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                     isCopied
                       ? 'bg-green-100 text-green-700'
@@ -647,12 +675,12 @@ export default function CustomerLensPage() {
 
             {/* 使用說明 */}
             <div className="mb-4 p-4 bg-blue-50 rounded-lg">
-              <h4 className="text-sm font-medium text-blue-800 mb-2">使用方式：</h4>
+              <h4 className="text-sm font-medium text-blue-800 mb-2">{t.customerLens.usage.title}</h4>
               <ol className="text-sm text-blue-700 space-y-1">
-                <li>1. 前往 <a href="https://notebooklm.google.com/" target="_blank" rel="noopener noreferrer" className="underline">NotebookLM</a> 建立新筆記本</li>
-                <li>2. 上傳客戶相關資料（官網截圖、年報 PDF、LinkedIn 資料等）</li>
-                <li>3. 複製下方 Prompt，貼到 NotebookLM 對話框</li>
-                <li>4. AI 會根據你上傳的資料產出分析結果</li>
+                <li>1. {t.customerLens.usage.step1}</li>
+                <li>2. {t.customerLens.usage.step2}</li>
+                <li>3. {t.customerLens.usage.step3}</li>
+                <li>4. {t.customerLens.usage.step4}</li>
               </ol>
             </div>
 
@@ -669,8 +697,8 @@ export default function CustomerLensPage() {
         {(!userProfile.productService || !userProfile.productAdvantage) && (
           <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-sm text-yellow-800">
-              <span className="font-medium">提示：</span>
-              建議先到「內容分身術」模組填寫你的產品/服務資料，讓 AI 能產出更精準的分析。
+              <span className="font-medium">{t.common.tip || '提示'}：</span>
+              {t.customerLens.profileWarning}
             </p>
           </div>
         )}

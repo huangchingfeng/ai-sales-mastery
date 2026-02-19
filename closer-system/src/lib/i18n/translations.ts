@@ -26,6 +26,8 @@ export const translations: Record<Language, {
     cancel: string;
     loading: string;
     step: string;
+    tip: string;
+    back: string;
   };
   // 登入頁
   login: {
@@ -38,6 +40,10 @@ export const translations: Record<Language, {
     loggingIn: string;
     wrongPassword: string;
     noAccount: string;
+    signUpTitle: string;
+    signInTitle: string;
+    hasAccount: string;
+    signIn: string;
   };
   // Sidebar
   sidebar: {
@@ -48,6 +54,7 @@ export const translations: Record<Language, {
     followUp: string;
     myProfile: string;
     logout: string;
+    defaultUser: string;
   };
   // Dashboard
   dashboard: {
@@ -217,6 +224,20 @@ export const translations: Record<Language, {
       regenerate: string;
       openNotebookLM: string;
     };
+    usage: {
+      title: string;
+      step1: string;
+      step2: string;
+      step3: string;
+      step4: string;
+    };
+    uploadGuide: {
+      title: string;
+      website: string;
+      annualReport: string;
+      linkedin: string;
+    };
+    profileWarning: string;
   };
   // Proposal Machine (模組 3)
   proposalMachine: {
@@ -279,12 +300,28 @@ export const translations: Record<Language, {
       openManus: string;
       downloadPdf: string;
     };
+    usage: {
+      title: string;
+      step1: string;
+      step2: string;
+      step3: string;
+      step4: string;
+    };
+    profileWarning: string;
   };
   // Follow Up (模組 4)
   followUp: {
     title: string;
     subtitle: string;
     scenarios: {
+      postMeeting: string;
+      silentCustomer: string;
+      holiday: string;
+      birthday: string;
+      valueShare: string;
+      referral: string;
+    };
+    scenarioDescriptions: {
       postMeeting: string;
       silentCustomer: string;
       holiday: string;
@@ -324,6 +361,89 @@ export const translations: Record<Language, {
       startUsing: string;
       backToSelect: string;
       generateFollowUp: string;
+      // Post Meeting fields
+      meetingDate: string;
+      meetingTopic: string;
+      meetingTopicPlaceholder: string;
+      meetingPoints: string;
+      meetingPointsPlaceholder: string;
+      customerQuestions: string;
+      customerQuestionsPlaceholder: string;
+      nextStep: string;
+      nextStepPlaceholder: string;
+      // Silent Customer fields
+      lastContactDate: string;
+      noCloseReason: string;
+      noCloseReasonPlaceholder: string;
+      lastContentLabel: string;
+      lastContentPlaceholder: string;
+      approachType: string;
+      approachOptions: {
+        value: string;
+        trend: string;
+        greeting: string;
+        newService: string;
+        other: string;
+      };
+      approachOtherPlaceholder: string;
+      // Holiday fields
+      holidayName: string;
+      holidayNamePlaceholder: string;
+      lastInteraction: string;
+      lastInteractionPlaceholder: string;
+      feelingLabel: string;
+      feelingOptions: {
+        formal: string;
+        warm: string;
+        humor: string;
+        simple: string;
+      };
+      mentionBusiness: string;
+      mentionBusinessOptions: {
+        none: string;
+        light: string;
+        clear: string;
+      };
+      // Birthday fields
+      birthdayFeelingOptions: {
+        formal: string;
+        personal: string;
+        humor: string;
+      };
+      customerInterests: string;
+      customerInterestsPlaceholder: string;
+      // Value Share fields
+      customerIndustry: string;
+      customerIndustryPlaceholder: string;
+      customerTopics: string;
+      customerTopicsPlaceholder: string;
+      shareTypeLabel: string;
+      shareTypeOptions: {
+        article: string;
+        report: string;
+        news: string;
+        tool: string;
+        event: string;
+      };
+      shareTitle: string;
+      shareTitlePlaceholder: string;
+      shareReason: string;
+      shareReasonPlaceholder: string;
+      shareLink: string;
+      shareLinkPlaceholder: string;
+      // Referral fields
+      cooperationDuration: string;
+      cooperationDurationPlaceholder: string;
+      cooperationResult: string;
+      cooperationResultPlaceholder: string;
+      referralTarget: string;
+      referralTargetPlaceholder: string;
+      referralIndustry: string;
+      referralIndustryPlaceholder: string;
+      referralPosition: string;
+      referralPositionPlaceholder: string;
+      hasReward: string;
+      rewardContentPlaceholder: string;
     };
     result: {
       title: string;
@@ -339,6 +459,7 @@ export const translations: Record<Language, {
       step3: string;
       step4: string;
     };
+    profileWarning: string;
   };
   // 產業選項
   industries: string[];
@@ -391,6 +512,10 @@ export const translations: Record<Language, {
       advanced: string;
       expert: string;
     };
+    systemPromptTitle: string;
+    noProfileTitle: string;
+    noProfileDescription: string;
+    goToContentClone: string;
   };
   // Profile 頁面
   profile: {
@@ -401,6 +526,91 @@ export const translations: Record<Language, {
     saveError: string;
     expandAll: string;
     collapseAll: string;
+  };
+  // 註冊相關
+  register?: {
+    inviteCode: string;
+    inviteCodePlaceholder: string;
+    inviteCodeRequired: string;
+    invalidCode: string;
+    name: string;
+    namePlaceholder: string;
+    passwordHint: string;
+    signingUp: string;
+    signUp: string;
+    nameRequired: string;
+  };
+  // Footer
+  footer: {
+    text: string;
+    email: string;
+  };
+  // 表單驗證
+  validation: {
+    industryRequired: string;
+    productRequired: string;
+  };
+  // Follow-Up prompt 用的 maps
+  followUpPromptMaps: {
+    approach: {
+      value: string;
+      trend: string;
+      greeting: string;
+      newService: string;
+      other: string;
+    };
+    tone: {
+      formal: string;
+      warm: string;
+      humor: string;
+      simple: string;
+    };
+    birthdayTone: {
+      formal: string;
+      personal: string;
+      humor: string;
+    };
+    business: {
+      none: string;
+      light: string;
+      clear: string;
+    };
+    shareType: {
+      article: string;
+      report: string;
+      news: string;
+      tool: string;
+      event: string;
+    };
+  };
+  // Admin 後台
+  admin?: {
+    title: string;
+    inviteCodes: string;
+    addStudent: string;
+    studentName: string;
+    studentEmail: string;
+    generateCode: string;
+    copyCode: string;
+    status: string;
+    used: string;
+    unused: string;
+    // 課程批量管理
+    uploadExcel?: string;
+    dragDropHint?: string;
+    supportedFormats?: string;
+    courseList?: string;
+    studentList?: string;
+    selectCourse?: string;
+    importing?: string;
+    importSuccess?: string;
+    importError?: string;
+    noCourses?: string;
+    noStudents?: string;
+    students?: string;
+    excelFormat?: string;
+    downloadTemplate?: string;
+    adminWarning?: string;
   };
 }> = {
   // ============ 繁體中文 ============
@@ -417,6 +627,8 @@ export const translations: Record<Language, {
       cancel: '取消',
       loading: '載入中...',
       step: '步驟',
+      tip: '提示',
+      back: '返回',
     },
     login: {
       title: 'CLOSER',
@@ -428,6 +640,10 @@ export const translations: Record<Language, {
       loggingIn: '登入中...',
       wrongPassword: '密碼錯誤，請重新輸入',
       noAccount: '還沒有帳號？請聯繫阿峰老師',
+      signUpTitle: '學員註冊',
+      signInTitle: '學員登入',
+      hasAccount: '已有帳號？',
+      signIn: '登入',
     },
     sidebar: {
       dashboard: '儀表板',
@@ -437,6 +653,7 @@ export const translations: Record<Language, {
       followUp: '跟進永動機',
       myProfile: '我的資料',
       logout: '登出',
+      defaultUser: '使用者',
     },
     dashboard: {
       welcome: '歡迎回來',
@@ -598,6 +815,20 @@ export const translations: Record<Language, {
         regenerate: '重新產生',
         openNotebookLM: '在 NotebookLM 中開啟',
       },
+      usage: {
+        title: '使用方式：',
+        step1: '前往 NotebookLM 建立新筆記本',
+        step2: '上傳客戶相關資料（官網截圖、年報 PDF、LinkedIn 資料等）',
+        step3: '複製下方 Prompt，貼到 NotebookLM 對話框',
+        step4: 'AI 會根據你上傳的資料產出分析結果',
+      },
+      uploadGuide: {
+        title: '請先上傳以下資料到 NotebookLM',
+        website: '客戶官網網址',
+        annualReport: '客戶年報 / 新聞網址（選填）',
+        linkedin: '決策者 LinkedIn 頁面（選填）',
+      },
+      profileWarning: '建議先到「內容分身術」模組填寫你的產品/服務資料，讓 AI 能產出更精準的分析。',
     },
     proposalMachine: {
       title: '提案印鈔機',
@@ -659,6 +890,14 @@ export const translations: Record<Language, {
         openManus: '在 Manus 中編輯',
         downloadPdf: '下載 PDF',
       },
+      usage: {
+        title: '使用說明',
+        step1: '點擊「複製提案」按鈕複製上方 Prompt',
+        step2: '前往 Manus.im 並貼上 Prompt',
+        step3: 'Manus 會自動搜尋客戶資料並產出完整提案',
+        step4: '等待 2-5 分鐘後即可下載 Word/PDF 格式提案',
+      },
+      profileWarning: '請先完成「內容分身」設定，讓系統自動帶入你的公司資料',
     },
     followUp: {
       title: '跟進永動機',
@@ -670,6 +909,14 @@ export const translations: Record<Language, {
         birthday: '生日祝福',
         valueShare: '分享價值',
         referral: '轉介紹請求',
+      },
+      scenarioDescriptions: {
+        postMeeting: '剛開完會，當天或隔天發送感謝訊息，整理重點並推進下一步',
+        silentCustomer: '客戶 1-3 個月沒聯絡，重新建立連結，不要太銷售',
+        holiday: '新年、中秋、聖誕等節日問候，維繫關係讓客戶記得你',
+        birthday: '客戶生日當天或前一天，個人化關懷建立情感連結',
+        valueShare: '看到對客戶有用的資訊，提供價值維持存在感',
+        referral: '客戶合作順利時，請他幫忙介紹擴大業務範圍',
       },
       form: {
         selectScenario: '選擇跟進情境',
@@ -703,6 +950,89 @@ export const translations: Record<Language, {
         startUsing: '開始使用',
         backToSelect: '返回選擇',
         generateFollowUp: '產生跟進訊息 Prompt',
+        // Post Meeting fields
+        meetingDate: '會議日期',
+        meetingTopic: '會議主題',
+        meetingTopicPlaceholder: '例：AI 導入計畫討論',
+        meetingPoints: '會議重點（每行一個重點）',
+        meetingPointsPlaceholder: '1. 第一個重點\n2. 第二個重點\n3. 第三個重點',
+        customerQuestions: '客戶提出的問題/疑慮',
+        customerQuestionsPlaceholder: '例：培訓時數是否可以調整？預算是否可以分期？',
+        nextStep: '約定的下一步',
+        nextStepPlaceholder: '例：本週五前提供正式報價',
+        // Silent Customer fields
+        lastContactDate: '上次聯絡日期',
+        noCloseReason: '當時沒成交的原因',
+        noCloseReasonPlaceholder: '例：預算不足 / 時機不對 / 需要考慮',
+        lastContentLabel: '上次聊的內容',
+        lastContentPlaceholder: '例：討論過 AI 培訓方案，客戶表示 Q2 後再考慮',
+        approachType: '切入點',
+        approachOptions: {
+          value: '分享有用資訊',
+          trend: '產業趨勢/新聞',
+          greeting: '單純問候關心',
+          newService: '新服務/優惠',
+          other: '其他',
+        },
+        approachOtherPlaceholder: '請描述你想用的切入點',
+        // Holiday fields
+        holidayName: '節日名稱',
+        holidayNamePlaceholder: '例：農曆新年 / 中秋節 / 聖誕節',
+        lastInteraction: '上次互動',
+        lastInteractionPlaceholder: '例：上個月開會 / 半年前合作',
+        feelingLabel: '傳達的感覺',
+        feelingOptions: {
+          formal: '正式祝福',
+          warm: '溫馨關懷',
+          humor: '輕鬆幽默',
+          simple: '簡單俐落',
+        },
+        mentionBusiness: '是否提到業務',
+        mentionBusinessOptions: {
+          none: '完全不提',
+          light: '輕輕帶過',
+          clear: '明確提到',
+        },
+        // Birthday fields
+        birthdayFeelingOptions: {
+          formal: '正式祝福',
+          personal: '溫馨個人化',
+          humor: '輕鬆幽默',
+        },
+        customerInterests: '客戶的興趣/特點（選填，讓祝福更個人化）',
+        customerInterestsPlaceholder: '例：愛喝咖啡 / 喜歡高爾夫 / 有兩個小孩',
+        // Value Share fields
+        customerIndustry: '客戶產業',
+        customerIndustryPlaceholder: '例：製造業 / 金融業',
+        customerTopics: '他關心的議題',
+        customerTopicsPlaceholder: '例：數位轉型 / AI 應用 / 效率提升',
+        shareTypeLabel: '分享內容類型',
+        shareTypeOptions: {
+          article: '文章',
+          report: '報告',
+          news: '新聞',
+          tool: '工具',
+          event: '活動',
+        },
+        shareTitle: '標題或主題',
+        shareTitlePlaceholder: '例：2026 製造業 AI 應用趨勢報告',
+        shareReason: '為什麼對他有用',
+        shareReasonPlaceholder: '例：裡面提到的 ROI 數據跟他之前問的很相關',
+        shareLink: '連結（選填）',
+        shareLinkPlaceholder: 'https://...',
+        // Referral fields
+        cooperationDuration: '合作多久',
+        cooperationDurationPlaceholder: '例：半年 / 一年 / 三年',
+        cooperationResult: '合作成果',
+        cooperationResultPlaceholder: '例：效率提升 30% / 營收成長 20%',
+        referralTarget: '希望介紹的對象描述',
+        referralTargetPlaceholder: '例：正在考慮 AI 培訓的企業主 / 想提升團隊效率的主管',
+        referralIndustry: '希望的產業（選填）',
+        referralIndustryPlaceholder: '例：科技業 / 製造業',
+        referralPosition: '希望的職位（選填）',
+        referralPositionPlaceholder: '例：HR主管 / 業務主管',
+        hasReward: '我有提供轉介紹獎勵',
+        rewardContentPlaceholder: '例：成交後提供 10% 回饋金 / 免費顧問諮詢一次',
       },
       result: {
         title: '跟進訊息',
@@ -718,6 +1048,7 @@ export const translations: Record<Language, {
         step3: '貼上 Prompt，AI 會產出 3 個版本的跟進訊息',
         step4: '選擇適合的版本，稍作調整後發送',
       },
+      profileWarning: '建議先到「內容分身術」模組填寫你的基本資料和說話風格，讓 AI 能產出更貼近你風格的訊息。',
     },
     industries: [
       '保險業', '房地產', 'B2B 業務', '金融服務', '汽車銷售',
@@ -775,6 +1106,10 @@ export const translations: Record<Language, {
         advanced: '專家級框架',
         expert: '大師級框架',
       },
+      systemPromptTitle: 'Gem 系統提示詞',
+      noProfileTitle: '尚未填寫資料',
+      noProfileDescription: '請先完成「內容分身術」的資料填寫，才能產生專屬 Gem。',
+      goToContentClone: '前往填寫資料',
     },
     profile: {
       title: '我的資料',
@@ -784,6 +1119,86 @@ export const translations: Record<Language, {
       saveError: '儲存失敗，請重試',
       expandAll: '全部展開',
       collapseAll: '全部收合',
+    },
+    register: {
+      inviteCode: '註冊碼',
+      inviteCodePlaceholder: '請輸入 6 位數註冊碼',
+      inviteCodeRequired: '請輸入註冊碼',
+      invalidCode: '註冊碼無效或不符合',
+      name: '姓名',
+      namePlaceholder: '請輸入姓名',
+      passwordHint: '密碼至少 6 個字元',
+      signingUp: '註冊中...',
+      signUp: '註冊',
+      nameRequired: '請輸入姓名',
+    },
+    admin: {
+      title: '管理後台',
+      inviteCodes: '註冊碼管理',
+      addStudent: '新增學員',
+      studentName: '學員姓名',
+      studentEmail: '學員 Email',
+      generateCode: '產生註冊碼',
+      copyCode: '複製',
+      status: '狀態',
+      used: '已使用',
+      unused: '未使用',
+      // 課程批量管理
+      uploadExcel: '上傳 Excel',
+      dragDropHint: '拖曳 Excel 檔案到此處，或點擊選擇檔案',
+      supportedFormats: '支援格式：.xlsx, .xls',
+      courseList: '課程列表',
+      studentList: '學員名單',
+      selectCourse: '請選擇課程查看學員',
+      importing: '匯入中...',
+      importSuccess: '成功匯入 {count} 位學員',
+      importError: '匯入失敗',
+      noCourses: '尚無課程',
+      noStudents: '此課程尚無學員',
+      students: '位學員',
+      excelFormat: 'Excel 欄位格式：課程日期/名稱、姓名、Email',
+      downloadTemplate: '下載範本',
+      adminWarning: '此為管理員專用頁面，所有操作皆有記錄。請確保 Firestore Security Rules 已正確設定以保護資料安全。',
+    },
+    footer: {
+      text: 'CLOSER 業績自動倍增 by Afeng Huang',
+      email: 'ai@autolab.cloud',
+    },
+    validation: {
+      industryRequired: '請選擇產業',
+      productRequired: '請填寫產品/服務',
+    },
+    followUpPromptMaps: {
+      approach: {
+        value: '分享一個對他有用的資訊',
+        trend: '提到產業趨勢或新聞',
+        greeting: '單純問候關心',
+        newService: '提到我們有新的服務/優惠',
+        other: '其他',
+      },
+      tone: {
+        formal: '正式祝福',
+        warm: '溫馨關懷',
+        humor: '輕鬆幽默',
+        simple: '簡單俐落',
+      },
+      birthdayTone: {
+        formal: '正式祝福',
+        personal: '溫馨個人化',
+        humor: '輕鬆幽默',
+      },
+      business: {
+        none: '完全不提（純問候）',
+        light: '輕輕帶過（年後有空聊聊）',
+        clear: '明確提到（新年新方案）',
+      },
+      shareType: {
+        article: '文章',
+        report: '報告',
+        news: '新聞',
+        tool: '工具',
+        event: '活動',
+      },
     },
   },
 
@@ -801,6 +1216,8 @@ export const translations: Record<Language, {
       cancel: '取消',
       loading: '加载中...',
       step: '步骤',
+      tip: '提示',
+      back: '返回',
     },
     login: {
       title: 'CLOSER',
@@ -812,6 +1229,10 @@ export const translations: Record<Language, {
       loggingIn: '登录中...',
       wrongPassword: '密码错误，请重新输入',
       noAccount: '还没有账号？请联系阿峰老师',
+      signUpTitle: '学员注册',
+      signInTitle: '学员登录',
+      hasAccount: '已有账号？',
+      signIn: '登录',
     },
     sidebar: {
       dashboard: '仪表板',
@@ -821,6 +1242,7 @@ export const translations: Record<Language, {
       followUp: '跟进永动机',
       myProfile: '我的资料',
       logout: '退出登录',
+      defaultUser: '用户',
     },
     dashboard: {
       welcome: '欢迎回来',
@@ -982,6 +1404,20 @@ export const translations: Record<Language, {
         regenerate: '重新生成',
         openNotebookLM: '在 NotebookLM 中打开',
       },
+      usage: {
+        title: '使用方式：',
+        step1: '前往 NotebookLM 创建新笔记本',
+        step2: '上传客户相关资料（官网截图、年报 PDF、LinkedIn 资料等）',
+        step3: '复制下方 Prompt，贴到 NotebookLM 对话框',
+        step4: 'AI 会根据你上传的资料产出分析结果',
+      },
+      uploadGuide: {
+        title: '请先上传以下资料到 NotebookLM',
+        website: '客户官网网址',
+        annualReport: '客户年报 / 新闻网址（选填）',
+        linkedin: '决策者 LinkedIn 页面（选填）',
+      },
+      profileWarning: '建议先到「内容分身术」模块填写你的产品/服务资料，让 AI 能产出更精准的分析。',
     },
     proposalMachine: {
       title: '提案印钞机',
@@ -1043,6 +1479,14 @@ export const translations: Record<Language, {
         openManus: '在 Manus 中编辑',
         downloadPdf: '下载 PDF',
       },
+      usage: {
+        title: '使用说明',
+        step1: '点击「复制提案」按钮复制上方 Prompt',
+        step2: '前往 Manus.im 并贴上 Prompt',
+        step3: 'Manus 会自动搜索客户资料并产出完整提案',
+        step4: '等待 2-5 分钟后即可下载 Word/PDF 格式提案',
+      },
+      profileWarning: '请先完成「内容分身」设置，让系统自动带入你的公司资料',
     },
     followUp: {
       title: '跟进永动机',
@@ -1054,6 +1498,14 @@ export const translations: Record<Language, {
         birthday: '生日祝福',
         valueShare: '分享价值',
         referral: '转介绍请求',
+      },
+      scenarioDescriptions: {
+        postMeeting: '刚开完会，当天或隔天发送感谢消息，整理重点并推进下一步',
+        silentCustomer: '客户 1-3 个月没联络，重新建立连结，不要太销售',
+        holiday: '新年、中秋、圣诞等节日问候，维系关系让客户记得你',
+        birthday: '客户生日当天或前一天，个人化关怀建立情感连结',
+        valueShare: '看到对客户有用的信息，提供价值维持存在感',
+        referral: '客户合作顺利时，请他帮忙介绍扩大业务范围',
       },
       form: {
         selectScenario: '选择跟进情境',
@@ -1087,6 +1539,89 @@ export const translations: Record<Language, {
         startUsing: '开始使用',
         backToSelect: '返回选择',
         generateFollowUp: '生成跟进消息 Prompt',
+        // Post Meeting fields
+        meetingDate: '会议日期',
+        meetingTopic: '会议主题',
+        meetingTopicPlaceholder: '例：AI 导入计划讨论',
+        meetingPoints: '会议重点（每行一个重点）',
+        meetingPointsPlaceholder: '1. 第一个重点\n2. 第二个重点\n3. 第三个重点',
+        customerQuestions: '客户提出的问题/疑虑',
+        customerQuestionsPlaceholder: '例：培训时数是否可以调整？预算是否可以分期？',
+        nextStep: '约定的下一步',
+        nextStepPlaceholder: '例：本周五前提供正式报价',
+        // Silent Customer fields
+        lastContactDate: '上次联络日期',
+        noCloseReason: '当时没成交的原因',
+        noCloseReasonPlaceholder: '例：预算不足 / 时机不对 / 需要考虑',
+        lastContentLabel: '上次聊的内容',
+        lastContentPlaceholder: '例：讨论过 AI 培训方案，客户表示 Q2 后再考虑',
+        approachType: '切入点',
+        approachOptions: {
+          value: '分享有用信息',
+          trend: '产业趋势/新闻',
+          greeting: '单纯问候关心',
+          newService: '新服务/优惠',
+          other: '其他',
+        },
+        approachOtherPlaceholder: '请描述你想用的切入点',
+        // Holiday fields
+        holidayName: '节日名称',
+        holidayNamePlaceholder: '例：春节 / 中秋节 / 圣诞节',
+        lastInteraction: '上次互动',
+        lastInteractionPlaceholder: '例：上个月开会 / 半年前合作',
+        feelingLabel: '传达的感觉',
+        feelingOptions: {
+          formal: '正式祝福',
+          warm: '温馨关怀',
+          humor: '轻松幽默',
+          simple: '简单俐落',
+        },
+        mentionBusiness: '是否提到业务',
+        mentionBusinessOptions: {
+          none: '完全不提',
+          light: '轻轻带过',
+          clear: '明确提到',
+        },
+        // Birthday fields
+        birthdayFeelingOptions: {
+          formal: '正式祝福',
+          personal: '温馨个人化',
+          humor: '轻松幽默',
+        },
+        customerInterests: '客户的兴趣/特点（选填，让祝福更个人化）',
+        customerInterestsPlaceholder: '例：爱喝咖啡 / 喜欢高尔夫 / 有两个小孩',
+        // Value Share fields
+        customerIndustry: '客户产业',
+        customerIndustryPlaceholder: '例：制造业 / 金融业',
+        customerTopics: '他关心的议题',
+        customerTopicsPlaceholder: '例：数字转型 / AI 应用 / 效率提升',
+        shareTypeLabel: '分享内容类型',
+        shareTypeOptions: {
+          article: '文章',
+          report: '报告',
+          news: '新闻',
+          tool: '工具',
+          event: '活动',
+        },
+        shareTitle: '标题或主题',
+        shareTitlePlaceholder: '例：2026 制造业 AI 应用趋势报告',
+        shareReason: '为什么对他有用',
+        shareReasonPlaceholder: '例：里面提到的 ROI 数据跟他之前问的很相关',
+        shareLink: '链接（选填）',
+        shareLinkPlaceholder: 'https://...',
+        // Referral fields
+        cooperationDuration: '合作多久',
+        cooperationDurationPlaceholder: '例：半年 / 一年 / 三年',
+        cooperationResult: '合作成果',
+        cooperationResultPlaceholder: '例：效率提升 30% / 营收成长 20%',
+        referralTarget: '希望介绍的对象描述',
+        referralTargetPlaceholder: '例：正在考虑 AI 培训的企业主 / 想提升团队效率的主管',
+        referralIndustry: '希望的产业（选填）',
+        referralIndustryPlaceholder: '例：科技业 / 制造业',
+        referralPosition: '希望的职位（选填）',
+        referralPositionPlaceholder: '例：HR主管 / 业务主管',
+        hasReward: '我有提供转介绍奖励',
+        rewardContentPlaceholder: '例：成交后提供 10% 回馈金 / 免费顾问咨询一次',
       },
       result: {
         title: '跟进消息',
@@ -1102,6 +1637,7 @@ export const translations: Record<Language, {
         step3: '粘贴 Prompt，AI 会产出 3 个版本的跟进消息',
         step4: '选择适合的版本，稍作调整后发送',
       },
+      profileWarning: '建议先到「内容分身术」模块填写你的基本资料和说话风格，让 AI 能产出更贴近你风格的消息。',
     },
     industries: [
       '保险业', '房地产', 'B2B 销售', '金融服务', '汽车销售',
@@ -1159,6 +1695,10 @@ export const translations: Record<Language, {
         advanced: '专家级框架',
         expert: '大师级框架',
       },
+      systemPromptTitle: 'Gem 系统提示词',
+      noProfileTitle: '尚未填写资料',
+      noProfileDescription: '请先完成「内容分身术」的资料填写，才能生成专属 Gem。',
+      goToContentClone: '前往填写资料',
     },
     profile: {
       title: '我的资料',
@@ -1168,6 +1708,86 @@ export const translations: Record<Language, {
       saveError: '保存失败，请重试',
       expandAll: '全部展开',
       collapseAll: '全部收起',
+    },
+    register: {
+      inviteCode: '注册码',
+      inviteCodePlaceholder: '请输入 6 位数注册码',
+      inviteCodeRequired: '请输入注册码',
+      invalidCode: '注册码无效或不符合',
+      name: '姓名',
+      namePlaceholder: '请输入姓名',
+      passwordHint: '密码至少 6 个字符',
+      signingUp: '注册中...',
+      signUp: '注册',
+      nameRequired: '请输入姓名',
+    },
+    admin: {
+      title: '管理后台',
+      inviteCodes: '注册码管理',
+      addStudent: '新增学员',
+      studentName: '学员姓名',
+      studentEmail: '学员 Email',
+      generateCode: '生成注册码',
+      copyCode: '复制',
+      status: '状态',
+      used: '已使用',
+      unused: '未使用',
+      // 课程批量管理
+      uploadExcel: '上传 Excel',
+      dragDropHint: '拖曳 Excel 文件到此处，或点击选择文件',
+      supportedFormats: '支持格式：.xlsx, .xls',
+      courseList: '课程列表',
+      studentList: '学员名单',
+      selectCourse: '请选择课程查看学员',
+      importing: '导入中...',
+      importSuccess: '成功导入 {count} 位学员',
+      importError: '导入失败',
+      noCourses: '暂无课程',
+      noStudents: '此课程暂无学员',
+      students: '位学员',
+      excelFormat: 'Excel 栏位格式：课程日期/名称、姓名、Email',
+      downloadTemplate: '下载模板',
+      adminWarning: '此为管理员专用页面，所有操作均有记录。请确保 Firestore Security Rules 已正确设置以保护数据安全。',
+    },
+    footer: {
+      text: 'CLOSER 业绩自动倍增 by Afeng Huang',
+      email: 'ai@autolab.cloud',
+    },
+    validation: {
+      industryRequired: '请选择行业',
+      productRequired: '请填写产品/服务',
+    },
+    followUpPromptMaps: {
+      approach: {
+        value: '分享一个对他有用的信息',
+        trend: '提到产业趋势或新闻',
+        greeting: '单纯问候关心',
+        newService: '提到我们有新的服务/优惠',
+        other: '其他',
+      },
+      tone: {
+        formal: '正式祝福',
+        warm: '温馨关怀',
+        humor: '轻松幽默',
+        simple: '简单利落',
+      },
+      birthdayTone: {
+        formal: '正式祝福',
+        personal: '温馨个人化',
+        humor: '轻松幽默',
+      },
+      business: {
+        none: '完全不提（纯问候）',
+        light: '轻轻带过（年后有空聊聊）',
+        clear: '明确提到（新年新方案）',
+      },
+      shareType: {
+        article: '文章',
+        report: '报告',
+        news: '新闻',
+        tool: '工具',
+        event: '活动',
+      },
     },
   },
 
@@ -1185,6 +1805,8 @@ export const translations: Record<Language, {
       cancel: 'Cancel',
       loading: 'Loading...',
       step: 'Step',
+      tip: 'Tip',
+      back: 'Back',
     },
     login: {
       title: 'CLOSER',
@@ -1196,6 +1818,10 @@ export const translations: Record<Language, {
       loggingIn: 'Logging in...',
       wrongPassword: 'Wrong password, please try again',
       noAccount: 'No account yet? Contact Afeng',
+      signUpTitle: 'Student Sign Up',
+      signInTitle: 'Student Sign In',
+      hasAccount: 'Already have an account?',
+      signIn: 'Sign In',
     },
     sidebar: {
       dashboard: 'Dashboard',
@@ -1205,6 +1831,7 @@ export const translations: Record<Language, {
       followUp: 'Follow-Up Engine',
       myProfile: 'My Profile',
       logout: 'Logout',
+      defaultUser: 'User',
     },
     dashboard: {
       welcome: 'Welcome Back',
@@ -1366,6 +1993,20 @@ export const translations: Record<Language, {
         regenerate: 'Regenerate',
         openNotebookLM: 'Open in NotebookLM',
       },
+      usage: {
+        title: 'How to Use:',
+        step1: 'Go to NotebookLM and create a new notebook',
+        step2: 'Upload customer materials (website screenshots, annual reports, LinkedIn profiles, etc.)',
+        step3: 'Copy the Prompt below and paste it into NotebookLM',
+        step4: 'AI will analyze your uploaded materials and generate results',
+      },
+      uploadGuide: {
+        title: 'Please upload the following to NotebookLM first',
+        website: 'Customer website URL',
+        annualReport: 'Customer annual report / News URL (optional)',
+        linkedin: 'Decision maker LinkedIn page (optional)',
+      },
+      profileWarning: 'We recommend completing your product/service profile in Content Clone first for more accurate AI analysis.',
     },
     proposalMachine: {
       title: 'Proposal Machine',
@@ -1427,6 +2068,14 @@ export const translations: Record<Language, {
         openManus: 'Edit in Manus',
         downloadPdf: 'Download PDF',
       },
+      usage: {
+        title: 'Instructions',
+        step1: 'Click "Copy Proposal" button to copy the Prompt above',
+        step2: 'Go to Manus.im and paste the Prompt',
+        step3: 'Manus will automatically search customer info and generate a complete proposal',
+        step4: 'Wait 2-5 minutes to download the proposal in Word/PDF format',
+      },
+      profileWarning: 'Please complete your Content Clone profile first so the system can auto-fill your company information',
     },
     followUp: {
       title: 'Follow-Up Engine',
@@ -1438,6 +2087,14 @@ export const translations: Record<Language, {
         birthday: 'Birthday Wishes',
         valueShare: 'Share Value',
         referral: 'Referral Request',
+      },
+      scenarioDescriptions: {
+        postMeeting: 'Just finished a meeting, send a thank you message the same day or next day to summarize key points and push next steps',
+        silentCustomer: 'Customer inactive for 1-3 months, re-establish connection without being too salesy',
+        holiday: 'New Year, Mid-Autumn, Christmas greetings to maintain relationship and stay memorable',
+        birthday: 'On or before customer birthday, personalized care to build emotional connection',
+        valueShare: 'Share useful information with customer to provide value and maintain presence',
+        referral: 'When customer relationship is good, ask for referrals to expand business scope',
       },
       form: {
         selectScenario: 'Select Follow-Up Scenario',
@@ -1471,6 +2128,89 @@ export const translations: Record<Language, {
         startUsing: 'Start Using',
         backToSelect: 'Back to Selection',
         generateFollowUp: 'Generate Follow-Up Prompt',
+        // Post Meeting fields
+        meetingDate: 'Meeting Date',
+        meetingTopic: 'Meeting Topic',
+        meetingTopicPlaceholder: 'e.g., AI Implementation Plan Discussion',
+        meetingPoints: 'Key Meeting Points (one per line)',
+        meetingPointsPlaceholder: '1. First key point\n2. Second key point\n3. Third key point',
+        customerQuestions: 'Customer Questions/Concerns',
+        customerQuestionsPlaceholder: 'e.g., Can training hours be adjusted? Can budget be paid in installments?',
+        nextStep: 'Agreed Next Step',
+        nextStepPlaceholder: 'e.g., Provide formal quote by Friday',
+        // Silent Customer fields
+        lastContactDate: 'Last Contact Date',
+        noCloseReason: 'Reason for Not Closing',
+        noCloseReasonPlaceholder: 'e.g., Budget insufficient / Wrong timing / Needs consideration',
+        lastContentLabel: 'Previous Discussion',
+        lastContentPlaceholder: 'e.g., Discussed AI training plan, customer said to reconsider after Q2',
+        approachType: 'Approach Type',
+        approachOptions: {
+          value: 'Share Useful Info',
+          trend: 'Industry Trends/News',
+          greeting: 'Simple Greeting',
+          newService: 'New Service/Offer',
+          other: 'Other',
+        },
+        approachOtherPlaceholder: 'Describe your approach',
+        // Holiday fields
+        holidayName: 'Holiday Name',
+        holidayNamePlaceholder: 'e.g., Chinese New Year / Christmas / Thanksgiving',
+        lastInteraction: 'Last Interaction',
+        lastInteractionPlaceholder: 'e.g., Met last month / Worked together 6 months ago',
+        feelingLabel: 'Tone/Feeling',
+        feelingOptions: {
+          formal: 'Formal Blessing',
+          warm: 'Warm & Caring',
+          humor: 'Light & Humorous',
+          simple: 'Simple & Clean',
+        },
+        mentionBusiness: 'Mention Business?',
+        mentionBusinessOptions: {
+          none: 'Not at all',
+          light: 'Lightly mention',
+          clear: 'Clearly mention',
+        },
+        // Birthday fields
+        birthdayFeelingOptions: {
+          formal: 'Formal Blessing',
+          personal: 'Warm & Personal',
+          humor: 'Light & Humorous',
+        },
+        customerInterests: 'Customer Interests/Traits (optional, for personalization)',
+        customerInterestsPlaceholder: 'e.g., Loves coffee / Plays golf / Has two kids',
+        // Value Share fields
+        customerIndustry: 'Customer Industry',
+        customerIndustryPlaceholder: 'e.g., Manufacturing / Finance',
+        customerTopics: 'Topics They Care About',
+        customerTopicsPlaceholder: 'e.g., Digital transformation / AI applications / Efficiency',
+        shareTypeLabel: 'Content Type',
+        shareTypeOptions: {
+          article: 'Article',
+          report: 'Report',
+          news: 'News',
+          tool: 'Tool',
+          event: 'Event',
+        },
+        shareTitle: 'Title or Topic',
+        shareTitlePlaceholder: 'e.g., 2026 Manufacturing AI Trends Report',
+        shareReason: 'Why It\'s Useful for Them',
+        shareReasonPlaceholder: 'e.g., The ROI data relates to their previous question',
+        shareLink: 'Link (optional)',
+        shareLinkPlaceholder: 'https://...',
+        // Referral fields
+        cooperationDuration: 'Cooperation Duration',
+        cooperationDurationPlaceholder: 'e.g., 6 months / 1 year / 3 years',
+        cooperationResult: 'Cooperation Results',
+        cooperationResultPlaceholder: 'e.g., 30% efficiency increase / 20% revenue growth',
+        referralTarget: 'Ideal Referral Description',
+        referralTargetPlaceholder: 'e.g., Business owners considering AI training / Managers looking to improve team efficiency',
+        referralIndustry: 'Preferred Industry (optional)',
+        referralIndustryPlaceholder: 'e.g., Tech / Manufacturing',
+        referralPosition: 'Preferred Position (optional)',
+        referralPositionPlaceholder: 'e.g., HR Manager / Sales Director',
+        hasReward: 'I offer referral rewards',
+        rewardContentPlaceholder: 'e.g., 10% commission on close / Free consultation session',
       },
       result: {
         title: 'Follow-Up Message',
@@ -1486,6 +2226,7 @@ export const translations: Record<Language, {
         step3: 'Paste Prompt, AI will generate 3 versions of follow-up messages',
         step4: 'Choose the suitable version, adjust and send',
       },
+      profileWarning: 'We recommend completing your basic info and speaking style in Content Clone first for AI messages that match your style.',
     },
     industries: [
       'Insurance', 'Real Estate', 'B2B Sales', 'Financial Services', 'Auto Sales',
@@ -1543,6 +2284,10 @@ export const translations: Record<Language, {
         advanced: 'Advanced Framework',
         expert: 'Master Framework',
       },
+      systemPromptTitle: 'Gem System Prompt',
+      noProfileTitle: 'Profile Not Found',
+      noProfileDescription: 'Please complete the Content Clone setup first to generate your personalized Gems.',
+      goToContentClone: 'Go to Content Clone',
     },
     profile: {
       title: 'My Profile',
@@ -1552,6 +2297,86 @@ export const translations: Record<Language, {
       saveError: 'Failed to save. Please try again.',
       expandAll: 'Expand All',
       collapseAll: 'Collapse All',
+    },
+    register: {
+      inviteCode: 'Invite Code',
+      inviteCodePlaceholder: 'Enter 6-digit invite code',
+      inviteCodeRequired: 'Please enter invite code',
+      invalidCode: 'Invalid invite code or email mismatch',
+      name: 'Name',
+      namePlaceholder: 'Enter your name',
+      passwordHint: 'Password must be at least 6 characters',
+      signingUp: 'Signing up...',
+      signUp: 'Sign Up',
+      nameRequired: 'Please enter your name',
+    },
+    admin: {
+      title: 'Admin Panel',
+      inviteCodes: 'Invite Code Management',
+      addStudent: 'Add Student',
+      studentName: 'Student Name',
+      studentEmail: 'Student Email',
+      generateCode: 'Generate Code',
+      copyCode: 'Copy',
+      status: 'Status',
+      used: 'Used',
+      unused: 'Unused',
+      // Course batch management
+      uploadExcel: 'Upload Excel',
+      dragDropHint: 'Drag and drop Excel file here, or click to select',
+      supportedFormats: 'Supported formats: .xlsx, .xls',
+      courseList: 'Course List',
+      studentList: 'Student List',
+      selectCourse: 'Select a course to view students',
+      importing: 'Importing...',
+      importSuccess: 'Successfully imported {count} students',
+      importError: 'Import failed',
+      noCourses: 'No courses yet',
+      noStudents: 'No students in this course',
+      students: 'students',
+      excelFormat: 'Excel format: Course Date/Name, Name, Email',
+      downloadTemplate: 'Download Template',
+      adminWarning: 'This is an admin-only page. All operations are logged. Please ensure Firestore Security Rules are properly configured to protect data.',
+    },
+    footer: {
+      text: 'CLOSER Auto-Multiply Revenue by Afeng Huang',
+      email: 'ai@autolab.cloud',
+    },
+    validation: {
+      industryRequired: 'Industry is required',
+      productRequired: 'Product/Service is required',
+    },
+    followUpPromptMaps: {
+      approach: {
+        value: 'Share useful information',
+        trend: 'Mention industry trends or news',
+        greeting: 'Simple greeting and care',
+        newService: 'Mention new services/offers',
+        other: 'Other',
+      },
+      tone: {
+        formal: 'Formal blessing',
+        warm: 'Warm and caring',
+        humor: 'Light and humorous',
+        simple: 'Simple and clean',
+      },
+      birthdayTone: {
+        formal: 'Formal blessing',
+        personal: 'Warm and personal',
+        humor: 'Light and humorous',
+      },
+      business: {
+        none: 'Not at all (pure greeting)',
+        light: 'Lightly mention (let\'s catch up after the holidays)',
+        clear: 'Clearly mention (new year, new plans)',
+      },
+      shareType: {
+        article: 'Article',
+        report: 'Report',
+        news: 'News',
+        tool: 'Tool',
+        event: 'Event',
+      },
     },
   },
 
@@ -1569,6 +2394,8 @@ export const translations: Record<Language, {
       cancel: 'Batal',
       loading: 'Memuatkan...',
       step: 'Langkah',
+      tip: 'Petua',
+      back: 'Kembali',
     },
     login: {
       title: 'CLOSER',
@@ -1580,6 +2407,10 @@ export const translations: Record<Language, {
       loggingIn: 'Sedang log masuk...',
       wrongPassword: 'Kata laluan salah, sila cuba lagi',
       noAccount: 'Tiada akaun? Hubungi Afeng',
+      signUpTitle: 'Pendaftaran Pelajar',
+      signInTitle: 'Log Masuk Pelajar',
+      hasAccount: 'Sudah ada akaun?',
+      signIn: 'Log Masuk',
     },
     sidebar: {
       dashboard: 'Papan Pemuka',
@@ -1589,6 +2420,7 @@ export const translations: Record<Language, {
       followUp: 'Enjin Susulan',
       myProfile: 'Profil Saya',
       logout: 'Log Keluar',
+      defaultUser: 'Pengguna',
     },
     dashboard: {
       welcome: 'Selamat Kembali',
@@ -1750,6 +2582,20 @@ export const translations: Record<Language, {
         regenerate: 'Jana Semula',
         openNotebookLM: 'Buka dalam NotebookLM',
       },
+      usage: {
+        title: 'Cara Penggunaan:',
+        step1: 'Pergi ke NotebookLM dan cipta notebook baru',
+        step2: 'Muat naik bahan pelanggan (tangkapan skrin laman web, laporan tahunan, profil LinkedIn, dll.)',
+        step3: 'Salin Prompt di bawah dan tampalkannya ke NotebookLM',
+        step4: 'AI akan menganalisis bahan yang dimuat naik dan menjana hasil',
+      },
+      uploadGuide: {
+        title: 'Sila muat naik perkara berikut ke NotebookLM dahulu',
+        website: 'URL laman web pelanggan',
+        annualReport: 'Laporan tahunan / URL berita pelanggan (pilihan)',
+        linkedin: 'Halaman LinkedIn pembuat keputusan (pilihan)',
+      },
+      profileWarning: 'Kami mencadangkan melengkapkan profil produk/perkhidmatan anda di Content Clone terlebih dahulu untuk analisis AI yang lebih tepat.',
     },
     proposalMachine: {
       title: 'Mesin Cadangan',
@@ -1811,6 +2657,14 @@ export const translations: Record<Language, {
         openManus: 'Edit dalam Manus',
         downloadPdf: 'Muat Turun PDF',
       },
+      usage: {
+        title: 'Arahan',
+        step1: 'Klik butang "Salin Cadangan" untuk menyalin Prompt di atas',
+        step2: 'Pergi ke Manus.im dan tampalkan Prompt',
+        step3: 'Manus akan mencari maklumat pelanggan secara automatik dan menjana cadangan lengkap',
+        step4: 'Tunggu 2-5 minit untuk memuat turun cadangan dalam format Word/PDF',
+      },
+      profileWarning: 'Sila lengkapkan profil Content Clone anda terlebih dahulu supaya sistem dapat mengisi maklumat syarikat anda secara automatik',
     },
     followUp: {
       title: 'Enjin Susulan',
@@ -1822,6 +2676,14 @@ export const translations: Record<Language, {
         birthday: 'Ucapan Hari Jadi',
         valueShare: 'Kongsi Nilai',
         referral: 'Permintaan Rujukan',
+      },
+      scenarioDescriptions: {
+        postMeeting: 'Baru selesai mesyuarat, hantar mesej terima kasih pada hari yang sama atau esoknya untuk meringkaskan perkara penting',
+        silentCustomer: 'Pelanggan tidak aktif selama 1-3 bulan, hubungi semula tanpa terlalu menjual',
+        holiday: 'Ucapan Tahun Baru, Pertengahan Musim Luruh, Krismas untuk mengekalkan hubungan',
+        birthday: 'Pada atau sebelum hari jadi pelanggan, penjagaan peribadi untuk membina hubungan emosi',
+        valueShare: 'Kongsi maklumat berguna dengan pelanggan untuk memberi nilai dan mengekalkan kehadiran',
+        referral: 'Apabila hubungan pelanggan baik, minta rujukan untuk memperluaskan skop perniagaan',
       },
       form: {
         selectScenario: 'Pilih Senario Susulan',
@@ -1855,6 +2717,89 @@ export const translations: Record<Language, {
         startUsing: 'Mula Guna',
         backToSelect: 'Kembali ke Pilihan',
         generateFollowUp: 'Jana Prompt Susulan',
+        // Post Meeting fields
+        meetingDate: 'Tarikh Mesyuarat',
+        meetingTopic: 'Topik Mesyuarat',
+        meetingTopicPlaceholder: 'cth: Perbincangan Rancangan Pelaksanaan AI',
+        meetingPoints: 'Perkara Utama Mesyuarat (satu baris satu)',
+        meetingPointsPlaceholder: '1. Perkara pertama\n2. Perkara kedua\n3. Perkara ketiga',
+        customerQuestions: 'Soalan/Kebimbangan Pelanggan',
+        customerQuestionsPlaceholder: 'cth: Boleh laraskan jam latihan? Boleh bayar ansuran?',
+        nextStep: 'Langkah Seterusnya yang Dipersetujui',
+        nextStepPlaceholder: 'cth: Berikan sebut harga rasmi sebelum Jumaat',
+        // Silent Customer fields
+        lastContactDate: 'Tarikh Hubungan Terakhir',
+        noCloseReason: 'Sebab Tidak Menutup',
+        noCloseReasonPlaceholder: 'cth: Bajet tidak mencukupi / Masa tidak sesuai / Perlu pertimbangan',
+        lastContentLabel: 'Perbincangan Sebelumnya',
+        lastContentPlaceholder: 'cth: Bincang rancangan latihan AI, pelanggan kata pertimbang selepas Q2',
+        approachType: 'Jenis Pendekatan',
+        approachOptions: {
+          value: 'Kongsi Maklumat Berguna',
+          trend: 'Trend/Berita Industri',
+          greeting: 'Salam Ringkas',
+          newService: 'Perkhidmatan/Tawaran Baru',
+          other: 'Lain-lain',
+        },
+        approachOtherPlaceholder: 'Terangkan pendekatan anda',
+        // Holiday fields
+        holidayName: 'Nama Perayaan',
+        holidayNamePlaceholder: 'cth: Hari Raya Aidilfitri / Tahun Baru Cina / Deepavali',
+        lastInteraction: 'Interaksi Terakhir',
+        lastInteractionPlaceholder: 'cth: Berjumpa bulan lepas / Bekerjasama 6 bulan lalu',
+        feelingLabel: 'Nada/Perasaan',
+        feelingOptions: {
+          formal: 'Ucapan Rasmi',
+          warm: 'Mesra & Prihatin',
+          humor: 'Santai & Jenaka',
+          simple: 'Ringkas & Bersih',
+        },
+        mentionBusiness: 'Sebut Perniagaan?',
+        mentionBusinessOptions: {
+          none: 'Langsung tidak',
+          light: 'Sebut sedikit',
+          clear: 'Sebut jelas',
+        },
+        // Birthday fields
+        birthdayFeelingOptions: {
+          formal: 'Ucapan Rasmi',
+          personal: 'Mesra & Peribadi',
+          humor: 'Santai & Jenaka',
+        },
+        customerInterests: 'Minat/Ciri Pelanggan (pilihan, untuk peribadikan)',
+        customerInterestsPlaceholder: 'cth: Suka kopi / Main golf / Ada dua anak',
+        // Value Share fields
+        customerIndustry: 'Industri Pelanggan',
+        customerIndustryPlaceholder: 'cth: Pembuatan / Kewangan',
+        customerTopics: 'Topik yang Diminati',
+        customerTopicsPlaceholder: 'cth: Transformasi digital / Aplikasi AI / Kecekapan',
+        shareTypeLabel: 'Jenis Kandungan',
+        shareTypeOptions: {
+          article: 'Artikel',
+          report: 'Laporan',
+          news: 'Berita',
+          tool: 'Alat',
+          event: 'Acara',
+        },
+        shareTitle: 'Tajuk atau Topik',
+        shareTitlePlaceholder: 'cth: Laporan Trend AI Pembuatan 2026',
+        shareReason: 'Mengapa Berguna untuk Mereka',
+        shareReasonPlaceholder: 'cth: Data ROI berkaitan dengan soalan mereka sebelumnya',
+        shareLink: 'Pautan (pilihan)',
+        shareLinkPlaceholder: 'https://...',
+        // Referral fields
+        cooperationDuration: 'Tempoh Kerjasama',
+        cooperationDurationPlaceholder: 'cth: 6 bulan / 1 tahun / 3 tahun',
+        cooperationResult: 'Hasil Kerjasama',
+        cooperationResultPlaceholder: 'cth: 30% peningkatan kecekapan / 20% pertumbuhan hasil',
+        referralTarget: 'Penerangan Rujukan Ideal',
+        referralTargetPlaceholder: 'cth: Pemilik perniagaan yang mempertimbangkan latihan AI / Pengurus yang ingin tingkatkan kecekapan pasukan',
+        referralIndustry: 'Industri Pilihan (pilihan)',
+        referralIndustryPlaceholder: 'cth: Teknologi / Pembuatan',
+        referralPosition: 'Jawatan Pilihan (pilihan)',
+        referralPositionPlaceholder: 'cth: Pengurus HR / Pengarah Jualan',
+        hasReward: 'Saya menawarkan ganjaran rujukan',
+        rewardContentPlaceholder: 'cth: 10% komisen atas penutupan / Sesi perundingan percuma',
       },
       result: {
         title: 'Mesej Susulan',
@@ -1870,6 +2815,7 @@ export const translations: Record<Language, {
         step3: 'Tampal Prompt, AI akan jana 3 versi mesej susulan',
         step4: 'Pilih versi yang sesuai, laras dan hantar',
       },
+      profileWarning: 'Kami mencadangkan melengkapkan maklumat asas dan gaya pertuturan anda di Content Clone terlebih dahulu untuk mesej AI yang sepadan dengan gaya anda.',
     },
     industries: [
       'Insurans', 'Hartanah', 'Jualan B2B', 'Perkhidmatan Kewangan', 'Jualan Kereta',
@@ -1927,6 +2873,10 @@ export const translations: Record<Language, {
         advanced: 'Rangka Kerja Lanjutan',
         expert: 'Rangka Kerja Pakar',
       },
+      systemPromptTitle: 'Prompt Sistem Gem',
+      noProfileTitle: 'Data Belum Diisi',
+      noProfileDescription: 'Sila lengkapkan pengisian data Content Clone terlebih dahulu untuk menjana Gem peribadi anda.',
+      goToContentClone: 'Pergi ke Content Clone',
     },
     profile: {
       title: 'Profil Saya',
@@ -1936,6 +2886,86 @@ export const translations: Record<Language, {
       saveError: 'Gagal menyimpan. Sila cuba lagi.',
       expandAll: 'Kembang Semua',
       collapseAll: 'Kuncup Semua',
+    },
+    register: {
+      inviteCode: 'Kod Jemputan',
+      inviteCodePlaceholder: 'Masukkan kod jemputan 6 digit',
+      inviteCodeRequired: 'Sila masukkan kod jemputan',
+      invalidCode: 'Kod jemputan tidak sah atau tidak sepadan',
+      name: 'Nama',
+      namePlaceholder: 'Masukkan nama anda',
+      passwordHint: 'Kata laluan sekurang-kurangnya 6 aksara',
+      signingUp: 'Mendaftar...',
+      signUp: 'Daftar',
+      nameRequired: 'Sila masukkan nama anda',
+    },
+    admin: {
+      title: 'Panel Pentadbir',
+      inviteCodes: 'Pengurusan Kod Jemputan',
+      addStudent: 'Tambah Pelajar',
+      studentName: 'Nama Pelajar',
+      studentEmail: 'Emel Pelajar',
+      generateCode: 'Jana Kod',
+      copyCode: 'Salin',
+      status: 'Status',
+      used: 'Digunakan',
+      unused: 'Belum Digunakan',
+      // Pengurusan kursus kelompok
+      uploadExcel: 'Muat Naik Excel',
+      dragDropHint: 'Seret dan lepas fail Excel di sini, atau klik untuk memilih',
+      supportedFormats: 'Format yang disokong: .xlsx, .xls',
+      courseList: 'Senarai Kursus',
+      studentList: 'Senarai Pelajar',
+      selectCourse: 'Pilih kursus untuk melihat pelajar',
+      importing: 'Mengimport...',
+      importSuccess: 'Berjaya mengimport {count} pelajar',
+      importError: 'Import gagal',
+      noCourses: 'Tiada kursus lagi',
+      noStudents: 'Tiada pelajar dalam kursus ini',
+      students: 'pelajar',
+      excelFormat: 'Format Excel: Tarikh/Nama Kursus, Nama, Emel',
+      downloadTemplate: 'Muat Turun Templat',
+      adminWarning: 'Ini adalah halaman khusus pentadbir. Semua operasi direkodkan. Sila pastikan Firestore Security Rules dikonfigurasi dengan betul untuk melindungi data.',
+    },
+    footer: {
+      text: 'CLOSER Auto-Gandakan Hasil oleh Afeng Huang',
+      email: 'ai@autolab.cloud',
+    },
+    validation: {
+      industryRequired: 'Industri diperlukan',
+      productRequired: 'Produk/Perkhidmatan diperlukan',
+    },
+    followUpPromptMaps: {
+      approach: {
+        value: 'Kongsi maklumat berguna',
+        trend: 'Sebut trend industri atau berita',
+        greeting: 'Salam ringkas dan prihatin',
+        newService: 'Sebut perkhidmatan/tawaran baru',
+        other: 'Lain-lain',
+      },
+      tone: {
+        formal: 'Ucapan rasmi',
+        warm: 'Mesra dan prihatin',
+        humor: 'Santai dan jenaka',
+        simple: 'Ringkas dan bersih',
+      },
+      birthdayTone: {
+        formal: 'Ucapan rasmi',
+        personal: 'Mesra dan peribadi',
+        humor: 'Santai dan jenaka',
+      },
+      business: {
+        none: 'Langsung tidak (salam sahaja)',
+        light: 'Sebut sedikit (jom jumpa selepas perayaan)',
+        clear: 'Sebut jelas (tahun baru, rancangan baru)',
+      },
+      shareType: {
+        article: 'Artikel',
+        report: 'Laporan',
+        news: 'Berita',
+        tool: 'Alat',
+        event: 'Acara',
+      },
     },
   },
 
@@ -1953,6 +2983,8 @@ export const translations: Record<Language, {
       cancel: 'キャンセル',
       loading: '読み込み中...',
       step: 'ステップ',
+      tip: 'ヒント',
+      back: '戻る',
     },
     login: {
       title: 'CLOSER',
@@ -1964,6 +2996,10 @@ export const translations: Record<Language, {
       loggingIn: 'ログイン中...',
       wrongPassword: 'パスワードが違います',
       noAccount: 'アカウントをお持ちでない方はAfengまでご連絡ください',
+      signUpTitle: '受講生登録',
+      signInTitle: '受講生ログイン',
+      hasAccount: 'アカウントをお持ちですか？',
+      signIn: 'ログイン',
     },
     sidebar: {
       dashboard: 'ダッシュボード',
@@ -1973,6 +3009,7 @@ export const translations: Record<Language, {
       followUp: 'フォローアップエンジン',
       myProfile: 'マイプロフィール',
       logout: 'ログアウト',
+      defaultUser: 'ユーザー',
     },
     dashboard: {
       welcome: 'おかえりなさい',
@@ -2134,6 +3171,20 @@ export const translations: Record<Language, {
         regenerate: '再生成',
         openNotebookLM: 'NotebookLMで開く',
       },
+      usage: {
+        title: '使い方：',
+        step1: 'NotebookLMで新しいノートブックを作成',
+        step2: '顧客資料をアップロード（ウェブサイトのスクリーンショット、年次報告書、LinkedInプロフィールなど）',
+        step3: '下のPromptをコピーしてNotebookLMに貼り付け',
+        step4: 'AIがアップロードした資料を分析して結果を生成します',
+      },
+      uploadGuide: {
+        title: '最初にNotebookLMに以下をアップロードしてください',
+        website: '顧客ウェブサイトURL',
+        annualReport: '顧客年次報告書 / ニュースURL（任意）',
+        linkedin: '意思決定者のLinkedInページ（任意）',
+      },
+      profileWarning: 'より正確なAI分析のため、まずContent Cloneで製品/サービスプロフィールを完成させることをお勧めします。',
     },
     proposalMachine: {
       title: '提案マシン',
@@ -2195,6 +3246,14 @@ export const translations: Record<Language, {
         openManus: 'Manusで編集',
         downloadPdf: 'PDFダウンロード',
       },
+      usage: {
+        title: '使用方法',
+        step1: '「提案をコピー」ボタンをクリックして上のPromptをコピー',
+        step2: 'Manus.imにアクセスしてPromptを貼り付け',
+        step3: 'Manusが自動的に顧客情報を検索して完全な提案を作成します',
+        step4: '2〜5分待ってWord/PDF形式で提案をダウンロード',
+      },
+      profileWarning: 'システムが会社情報を自動入力できるよう、まずContent Cloneプロフィールを完成させてください',
     },
     followUp: {
       title: 'フォローアップエンジン',
@@ -2206,6 +3265,14 @@ export const translations: Record<Language, {
         birthday: '誕生日のお祝い',
         valueShare: '価値の共有',
         referral: '紹介依頼',
+      },
+      scenarioDescriptions: {
+        postMeeting: '会議直後、当日または翌日にお礼メッセージを送り、重要ポイントをまとめて次のステップを進める',
+        silentCustomer: '1〜3ヶ月連絡のない顧客に、セールス感を出さずに再接触',
+        holiday: '新年、中秋、クリスマスの挨拶で関係を維持し、記憶に残る',
+        birthday: '顧客の誕生日当日または前日に、パーソナライズされた気遣いで感情的なつながりを構築',
+        valueShare: '顧客に役立つ情報を共有し、価値を提供して存在感を維持',
+        referral: '顧客との関係が良好な時、紹介を依頼してビジネス範囲を拡大',
       },
       form: {
         selectScenario: 'フォローアップシナリオを選択',
@@ -2239,6 +3306,89 @@ export const translations: Record<Language, {
         startUsing: '使用開始',
         backToSelect: '選択に戻る',
         generateFollowUp: 'フォローアッププロンプトを生成',
+        // Post Meeting fields
+        meetingDate: '会議日',
+        meetingTopic: '会議トピック',
+        meetingTopicPlaceholder: '例：AI導入計画の議論',
+        meetingPoints: '会議の要点（1行に1つ）',
+        meetingPointsPlaceholder: '1. 第一のポイント\n2. 第二のポイント\n3. 第三のポイント',
+        customerQuestions: '顧客の質問/懸念',
+        customerQuestionsPlaceholder: '例：研修時間の調整は可能？予算の分割払いは？',
+        nextStep: '合意した次のステップ',
+        nextStepPlaceholder: '例：金曜日までに正式見積もりを提出',
+        // Silent Customer fields
+        lastContactDate: '最終連絡日',
+        noCloseReason: '成約しなかった理由',
+        noCloseReasonPlaceholder: '例：予算不足 / タイミングが悪い / 検討が必要',
+        lastContentLabel: '前回の話し合い',
+        lastContentPlaceholder: '例：AI研修プランを議論、顧客はQ2以降に再検討と回答',
+        approachType: 'アプローチ方法',
+        approachOptions: {
+          value: '有益な情報を共有',
+          trend: '業界トレンド/ニュース',
+          greeting: 'シンプルな挨拶',
+          newService: '新サービス/特典',
+          other: 'その他',
+        },
+        approachOtherPlaceholder: 'アプローチ方法を説明してください',
+        // Holiday fields
+        holidayName: '祝日名',
+        holidayNamePlaceholder: '例：正月 / クリスマス / ゴールデンウィーク',
+        lastInteraction: '最後の交流',
+        lastInteractionPlaceholder: '例：先月会った / 半年前に協力',
+        feelingLabel: 'トーン/雰囲気',
+        feelingOptions: {
+          formal: 'フォーマルな祝福',
+          warm: '温かく思いやりのある',
+          humor: '軽くユーモラス',
+          simple: 'シンプル＆クリーン',
+        },
+        mentionBusiness: 'ビジネスに言及？',
+        mentionBusinessOptions: {
+          none: '全く言及しない',
+          light: '軽く触れる',
+          clear: 'はっきり言及',
+        },
+        // Birthday fields
+        birthdayFeelingOptions: {
+          formal: 'フォーマルな祝福',
+          personal: '温かく個人的',
+          humor: '軽くユーモラス',
+        },
+        customerInterests: '顧客の興味/特徴（任意、パーソナライズ用）',
+        customerInterestsPlaceholder: '例：コーヒー好き / ゴルフをする / 子供が2人',
+        // Value Share fields
+        customerIndustry: '顧客の業界',
+        customerIndustryPlaceholder: '例：製造業 / 金融業',
+        customerTopics: '関心のあるトピック',
+        customerTopicsPlaceholder: '例：デジタル変革 / AI活用 / 効率化',
+        shareTypeLabel: 'コンテンツタイプ',
+        shareTypeOptions: {
+          article: '記事',
+          report: 'レポート',
+          news: 'ニュース',
+          tool: 'ツール',
+          event: 'イベント',
+        },
+        shareTitle: 'タイトルまたはトピック',
+        shareTitlePlaceholder: '例：2026年製造業AIトレンドレポート',
+        shareReason: '役立つ理由',
+        shareReasonPlaceholder: '例：ROIデータが以前の質問に関連している',
+        shareLink: 'リンク（任意）',
+        shareLinkPlaceholder: 'https://...',
+        // Referral fields
+        cooperationDuration: '協力期間',
+        cooperationDurationPlaceholder: '例：6ヶ月 / 1年 / 3年',
+        cooperationResult: '協力成果',
+        cooperationResultPlaceholder: '例：効率30%向上 / 売上20%増加',
+        referralTarget: '理想的な紹介先の説明',
+        referralTargetPlaceholder: '例：AI研修を検討中の経営者 / チーム効率を高めたいマネージャー',
+        referralIndustry: '希望業界（任意）',
+        referralIndustryPlaceholder: '例：IT業界 / 製造業',
+        referralPosition: '希望役職（任意）',
+        referralPositionPlaceholder: '例：人事部長 / 営業部長',
+        hasReward: '紹介報酬を提供します',
+        rewardContentPlaceholder: '例：成約時10%コミッション / 無料コンサルセッション',
       },
       result: {
         title: 'フォローアップメッセージ',
@@ -2254,6 +3404,7 @@ export const translations: Record<Language, {
         step3: 'プロンプトを貼り付け、AIが3バージョンのフォローアップメッセージを生成',
         step4: '適切なバージョンを選び、調整して送信',
       },
+      profileWarning: 'あなたのスタイルに合ったAIメッセージのため、まずContent Cloneで基本情報と話し方のスタイルを完成させることをお勧めします。',
     },
     industries: [
       '保険', '不動産', 'B2B営業', '金融サービス', '自動車販売',
@@ -2311,6 +3462,10 @@ export const translations: Record<Language, {
         advanced: '上級フレームワーク',
         expert: 'マスターフレームワーク',
       },
+      systemPromptTitle: 'Gem システムプロンプト',
+      noProfileTitle: 'データ未入力',
+      noProfileDescription: '「コンテンツクローン」のデータ入力を完了してから、専用Gemを生成してください。',
+      goToContentClone: 'データ入力へ',
     },
     profile: {
       title: 'マイプロフィール',
@@ -2320,6 +3475,86 @@ export const translations: Record<Language, {
       saveError: '保存に失敗しました。もう一度お試しください。',
       expandAll: 'すべて展開',
       collapseAll: 'すべて折りたたむ',
+    },
+    register: {
+      inviteCode: '招待コード',
+      inviteCodePlaceholder: '6桁の招待コードを入力',
+      inviteCodeRequired: '招待コードを入力してください',
+      invalidCode: '招待コードが無効またはメールアドレスが一致しません',
+      name: '氏名',
+      namePlaceholder: '氏名を入力してください',
+      passwordHint: 'パスワードは6文字以上',
+      signingUp: '登録中...',
+      signUp: '登録',
+      nameRequired: '氏名を入力してください',
+    },
+    admin: {
+      title: '管理パネル',
+      inviteCodes: '招待コード管理',
+      addStudent: '受講者を追加',
+      studentName: '受講者名',
+      studentEmail: '受講者メール',
+      generateCode: 'コードを生成',
+      copyCode: 'コピー',
+      status: 'ステータス',
+      used: '使用済み',
+      unused: '未使用',
+      // コースバッチ管理
+      uploadExcel: 'Excel をアップロード',
+      dragDropHint: 'Excel ファイルをここにドラッグ＆ドロップするか、クリックして選択',
+      supportedFormats: '対応形式：.xlsx, .xls',
+      courseList: 'コース一覧',
+      studentList: '受講者一覧',
+      selectCourse: 'コースを選択して受講者を表示',
+      importing: 'インポート中...',
+      importSuccess: '{count} 名の受講者をインポートしました',
+      importError: 'インポート失敗',
+      noCourses: 'コースがありません',
+      noStudents: 'このコースには受講者がいません',
+      students: '名',
+      excelFormat: 'Excel 形式：コース日付/名前、氏名、メール',
+      downloadTemplate: 'テンプレートをダウンロード',
+      adminWarning: 'これは管理者専用ページです。すべての操作は記録されます。データを保護するために Firestore Security Rules が正しく設定されていることを確認してください。',
+    },
+    footer: {
+      text: 'CLOSER 業績自動倍増 by Afeng Huang',
+      email: 'ai@autolab.cloud',
+    },
+    validation: {
+      industryRequired: '業種を選択してください',
+      productRequired: '製品/サービスを入力してください',
+    },
+    followUpPromptMaps: {
+      approach: {
+        value: '役立つ情報を共有',
+        trend: '業界トレンドやニュースに言及',
+        greeting: 'シンプルな挨拶と気遣い',
+        newService: '新サービス/特典に言及',
+        other: 'その他',
+      },
+      tone: {
+        formal: 'フォーマルな祝福',
+        warm: '温かく思いやりのある',
+        humor: '軽くユーモラス',
+        simple: 'シンプル＆クリーン',
+      },
+      birthdayTone: {
+        formal: 'フォーマルな祝福',
+        personal: '温かく個人的',
+        humor: '軽くユーモラス',
+      },
+      business: {
+        none: '全く言及しない（純粋な挨拶）',
+        light: '軽く触れる（休暇後にお会いしましょう）',
+        clear: 'はっきり言及（新年、新プラン）',
+      },
+      shareType: {
+        article: '記事',
+        report: 'レポート',
+        news: 'ニュース',
+        tool: 'ツール',
+        event: 'イベント',
+      },
     },
   },
 
@@ -2337,6 +3572,8 @@ export const translations: Record<Language, {
       cancel: '취소',
       loading: '로딩 중...',
       step: '단계',
+      tip: '팁',
+      back: '돌아가기',
     },
     login: {
       title: 'CLOSER',
@@ -2348,6 +3585,10 @@ export const translations: Record<Language, {
       loggingIn: '로그인 중...',
       wrongPassword: '비밀번호가 틀렸습니다. 다시 시도해 주세요',
       noAccount: '계정이 없으신가요? Afeng에게 연락하세요',
+      signUpTitle: '수강생 등록',
+      signInTitle: '수강생 로그인',
+      hasAccount: '이미 계정이 있으신가요?',
+      signIn: '로그인',
     },
     sidebar: {
       dashboard: '대시보드',
@@ -2357,6 +3598,7 @@ export const translations: Record<Language, {
       followUp: '후속 엔진',
       myProfile: '내 프로필',
       logout: '로그아웃',
+      defaultUser: '사용자',
     },
     dashboard: {
       welcome: '돌아오신 것을 환영합니다',
@@ -2518,6 +3760,20 @@ export const translations: Record<Language, {
         regenerate: '다시 생성',
         openNotebookLM: 'NotebookLM에서 열기',
       },
+      usage: {
+        title: '사용 방법:',
+        step1: 'NotebookLM에서 새 노트북 만들기',
+        step2: '고객 자료 업로드 (웹사이트 스크린샷, 연간 보고서, LinkedIn 프로필 등)',
+        step3: '아래 Prompt를 복사하여 NotebookLM에 붙여넣기',
+        step4: 'AI가 업로드된 자료를 분석하여 결과를 생성합니다',
+      },
+      uploadGuide: {
+        title: '먼저 NotebookLM에 다음을 업로드하세요',
+        website: '고객 웹사이트 URL',
+        annualReport: '고객 연간 보고서 / 뉴스 URL (선택)',
+        linkedin: '의사결정자 LinkedIn 페이지 (선택)',
+      },
+      profileWarning: '더 정확한 AI 분석을 위해 먼저 Content Clone에서 제품/서비스 프로필을 완성하는 것을 권장합니다.',
     },
     proposalMachine: {
       title: '제안 머신',
@@ -2579,6 +3835,14 @@ export const translations: Record<Language, {
         openManus: 'Manus에서 편집',
         downloadPdf: 'PDF 다운로드',
       },
+      usage: {
+        title: '사용 방법',
+        step1: '"제안서 복사" 버튼을 클릭하여 위의 Prompt 복사',
+        step2: 'Manus.im으로 이동하여 Prompt 붙여넣기',
+        step3: 'Manus가 자동으로 고객 정보를 검색하고 완전한 제안서를 생성합니다',
+        step4: '2-5분 후 Word/PDF 형식으로 제안서 다운로드',
+      },
+      profileWarning: '시스템이 회사 정보를 자동으로 입력할 수 있도록 먼저 Content Clone 프로필을 완성해 주세요',
     },
     followUp: {
       title: '후속 엔진',
@@ -2590,6 +3854,14 @@ export const translations: Record<Language, {
         birthday: '생일 축하',
         valueShare: '가치 공유',
         referral: '소개 요청',
+      },
+      scenarioDescriptions: {
+        postMeeting: '회의 직후, 당일 또는 다음 날 감사 메시지를 보내 주요 사항을 요약하고 다음 단계 진행',
+        silentCustomer: '1-3개월 동안 연락이 없는 고객에게 판매 느낌 없이 재연결',
+        holiday: '새해, 추석, 크리스마스 인사로 관계를 유지하고 기억에 남기',
+        birthday: '고객 생일 당일 또는 전날, 개인화된 배려로 감정적 연결 구축',
+        valueShare: '고객에게 유용한 정보를 공유하여 가치를 제공하고 존재감 유지',
+        referral: '고객 관계가 좋을 때 추천을 요청하여 비즈니스 범위 확대',
       },
       form: {
         selectScenario: '후속 시나리오 선택',
@@ -2623,6 +3895,89 @@ export const translations: Record<Language, {
         startUsing: '사용 시작',
         backToSelect: '선택으로 돌아가기',
         generateFollowUp: '후속 프롬프트 생성',
+        // Post Meeting fields
+        meetingDate: '회의 날짜',
+        meetingTopic: '회의 주제',
+        meetingTopicPlaceholder: '예: AI 도입 계획 논의',
+        meetingPoints: '회의 핵심 포인트 (한 줄에 하나)',
+        meetingPointsPlaceholder: '1. 첫 번째 포인트\n2. 두 번째 포인트\n3. 세 번째 포인트',
+        customerQuestions: '고객 질문/우려사항',
+        customerQuestionsPlaceholder: '예: 교육 시간 조정 가능? 예산 분할 납부 가능?',
+        nextStep: '합의된 다음 단계',
+        nextStepPlaceholder: '예: 금요일까지 정식 견적 제출',
+        // Silent Customer fields
+        lastContactDate: '마지막 연락 날짜',
+        noCloseReason: '성사되지 않은 이유',
+        noCloseReasonPlaceholder: '예: 예산 부족 / 타이밍 안 맞음 / 고려 필요',
+        lastContentLabel: '이전 논의 내용',
+        lastContentPlaceholder: '예: AI 교육 계획 논의, 고객이 Q2 이후 재고려한다고 함',
+        approachType: '접근 방식',
+        approachOptions: {
+          value: '유용한 정보 공유',
+          trend: '업계 트렌드/뉴스',
+          greeting: '간단한 인사',
+          newService: '신규 서비스/혜택',
+          other: '기타',
+        },
+        approachOtherPlaceholder: '접근 방식을 설명해주세요',
+        // Holiday fields
+        holidayName: '명절 이름',
+        holidayNamePlaceholder: '예: 설날 / 추석 / 크리스마스',
+        lastInteraction: '마지막 교류',
+        lastInteractionPlaceholder: '예: 지난달 만남 / 6개월 전 협력',
+        feelingLabel: '톤/느낌',
+        feelingOptions: {
+          formal: '격식 있는 축하',
+          warm: '따뜻하고 배려하는',
+          humor: '가볍고 유머러스',
+          simple: '심플 & 깔끔',
+        },
+        mentionBusiness: '비즈니스 언급?',
+        mentionBusinessOptions: {
+          none: '전혀 안 함',
+          light: '가볍게 언급',
+          clear: '명확히 언급',
+        },
+        // Birthday fields
+        birthdayFeelingOptions: {
+          formal: '격식 있는 축하',
+          personal: '따뜻하고 개인적',
+          humor: '가볍고 유머러스',
+        },
+        customerInterests: '고객 관심사/특징 (선택, 개인화용)',
+        customerInterestsPlaceholder: '예: 커피를 좋아함 / 골프 침 / 자녀 2명',
+        // Value Share fields
+        customerIndustry: '고객 업계',
+        customerIndustryPlaceholder: '예: 제조업 / 금융업',
+        customerTopics: '관심 있는 주제',
+        customerTopicsPlaceholder: '예: 디지털 전환 / AI 활용 / 효율성',
+        shareTypeLabel: '콘텐츠 유형',
+        shareTypeOptions: {
+          article: '기사',
+          report: '리포트',
+          news: '뉴스',
+          tool: '도구',
+          event: '이벤트',
+        },
+        shareTitle: '제목 또는 주제',
+        shareTitlePlaceholder: '예: 2026 제조업 AI 트렌드 리포트',
+        shareReason: '유용한 이유',
+        shareReasonPlaceholder: '예: ROI 데이터가 이전 질문과 관련됨',
+        shareLink: '링크 (선택)',
+        shareLinkPlaceholder: 'https://...',
+        // Referral fields
+        cooperationDuration: '협력 기간',
+        cooperationDurationPlaceholder: '예: 6개월 / 1년 / 3년',
+        cooperationResult: '협력 성과',
+        cooperationResultPlaceholder: '예: 효율성 30% 향상 / 매출 20% 성장',
+        referralTarget: '이상적인 소개 대상 설명',
+        referralTargetPlaceholder: '예: AI 교육을 고려 중인 사업주 / 팀 효율성을 높이려는 관리자',
+        referralIndustry: '선호 업계 (선택)',
+        referralIndustryPlaceholder: '예: IT / 제조업',
+        referralPosition: '선호 직책 (선택)',
+        referralPositionPlaceholder: '예: HR 매니저 / 영업 이사',
+        hasReward: '추천 보상 제공',
+        rewardContentPlaceholder: '예: 성사 시 10% 커미션 / 무료 상담 세션',
       },
       result: {
         title: '후속 메시지',
@@ -2638,6 +3993,7 @@ export const translations: Record<Language, {
         step3: '프롬프트 붙여넣기, AI가 3가지 버전의 후속 메시지 생성',
         step4: '적합한 버전 선택, 조정 후 발송',
       },
+      profileWarning: '당신의 스타일에 맞는 AI 메시지를 위해 먼저 Content Clone에서 기본 정보와 말하기 스타일을 완성하는 것을 권장합니다.',
     },
     industries: [
       '보험', '부동산', 'B2B 영업', '금융 서비스', '자동차 판매',
@@ -2695,6 +4051,10 @@ export const translations: Record<Language, {
         advanced: '고급 프레임워크',
         expert: '마스터 프레임워크',
       },
+      systemPromptTitle: 'Gem 시스템 프롬프트',
+      noProfileTitle: '데이터 미입력',
+      noProfileDescription: '맞춤형 Gem을 생성하려면 먼저 콘텐츠 클론 데이터를 완성해 주세요.',
+      goToContentClone: '데이터 입력하러 가기',
     },
     profile: {
       title: '내 프로필',
@@ -2704,6 +4064,86 @@ export const translations: Record<Language, {
       saveError: '저장에 실패했습니다. 다시 시도해 주세요.',
       expandAll: '모두 펼치기',
       collapseAll: '모두 접기',
+    },
+    register: {
+      inviteCode: '초대 코드',
+      inviteCodePlaceholder: '6자리 초대 코드 입력',
+      inviteCodeRequired: '초대 코드를 입력하세요',
+      invalidCode: '초대 코드가 유효하지 않거나 이메일이 일치하지 않습니다',
+      name: '이름',
+      namePlaceholder: '이름을 입력하세요',
+      passwordHint: '비밀번호는 최소 6자 이상',
+      signingUp: '등록 중...',
+      signUp: '등록',
+      nameRequired: '이름을 입력하세요',
+    },
+    admin: {
+      title: '관리자 패널',
+      inviteCodes: '초대 코드 관리',
+      addStudent: '학생 추가',
+      studentName: '학생 이름',
+      studentEmail: '학생 이메일',
+      generateCode: '코드 생성',
+      copyCode: '복사',
+      status: '상태',
+      used: '사용됨',
+      unused: '미사용',
+      // 코스 일괄 관리
+      uploadExcel: 'Excel 업로드',
+      dragDropHint: 'Excel 파일을 여기에 드래그하거나 클릭하여 선택',
+      supportedFormats: '지원 형식: .xlsx, .xls',
+      courseList: '코스 목록',
+      studentList: '학생 목록',
+      selectCourse: '학생을 보려면 코스를 선택하세요',
+      importing: '가져오는 중...',
+      importSuccess: '{count}명의 학생을 성공적으로 가져왔습니다',
+      importError: '가져오기 실패',
+      noCourses: '아직 코스가 없습니다',
+      noStudents: '이 코스에 학생이 없습니다',
+      students: '명',
+      excelFormat: 'Excel 형식: 코스 날짜/이름, 이름, 이메일',
+      downloadTemplate: '템플릿 다운로드',
+      adminWarning: '관리자 전용 페이지입니다. 모든 작업이 기록됩니다. 데이터를 보호하기 위해 Firestore Security Rules가 올바르게 설정되었는지 확인하세요.',
+    },
+    footer: {
+      text: 'CLOSER 실적 자동 배증 by Afeng Huang',
+      email: 'ai@autolab.cloud',
+    },
+    validation: {
+      industryRequired: '업종을 선택하세요',
+      productRequired: '제품/서비스를 입력하세요',
+    },
+    followUpPromptMaps: {
+      approach: {
+        value: '유용한 정보 공유',
+        trend: '업계 트렌드나 뉴스 언급',
+        greeting: '간단한 인사와 안부',
+        newService: '신규 서비스/혜택 언급',
+        other: '기타',
+      },
+      tone: {
+        formal: '격식 있는 축하',
+        warm: '따뜻하고 배려하는',
+        humor: '가볍고 유머러스',
+        simple: '심플 & 깔끔',
+      },
+      birthdayTone: {
+        formal: '격식 있는 축하',
+        personal: '따뜻하고 개인적',
+        humor: '가볍고 유머러스',
+      },
+      business: {
+        none: '전혀 안 함 (순수 인사)',
+        light: '가볍게 언급 (연휴 후 만나요)',
+        clear: '명확히 언급 (새해, 새 계획)',
+      },
+      shareType: {
+        article: '기사',
+        report: '보고서',
+        news: '뉴스',
+        tool: '도구',
+        event: '이벤트',
+      },
     },
   },
 };

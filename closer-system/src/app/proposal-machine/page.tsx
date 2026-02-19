@@ -303,7 +303,7 @@ ${companyInfo}`;
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-gray-500">{t.common.loading}</div>
+          <div role="status" aria-label="Loading" className="text-gray-500">{t.common.loading}</div>
         </div>
       </DashboardLayout>
     );
@@ -322,26 +322,35 @@ ${companyInfo}`;
         {!profile.name && (
           <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-yellow-800 text-sm">
-              提示：請先完成「內容分身」設定，讓系統自動帶入你的公司資料
+              {t.common.tip || '提示'}：{t.proposalMachine.profileWarning}
             </p>
           </div>
         )}
 
         {/* Tab 導航 */}
-        <div className="flex space-x-1 mb-0">
+        <div className="flex space-x-1 mb-0" role="tablist" aria-label="Proposal Machine tabs">
           <button
+            role="tab"
+            aria-selected={activeTab === 'fullProposal'}
+            aria-controls="tabpanel-fullProposal"
             onClick={() => setActiveTab('fullProposal')}
             className={tabClass('fullProposal')}
           >
             {t.proposalMachine.tabs.fullProposal}
           </button>
           <button
+            role="tab"
+            aria-selected={activeTab === 'quickProposal'}
+            aria-controls="tabpanel-quickProposal"
             onClick={() => setActiveTab('quickProposal')}
             className={tabClass('quickProposal')}
           >
             {t.proposalMachine.tabs.quickProposal}
           </button>
           <button
+            role="tab"
+            aria-selected={activeTab === 'presentation'}
+            aria-controls="tabpanel-presentation"
             onClick={() => setActiveTab('presentation')}
             className={tabClass('presentation')}
           >
@@ -353,7 +362,7 @@ ${companyInfo}`;
         <div className="bg-white rounded-b-lg rounded-tr-lg shadow-sm border border-gray-200 p-6">
           {/* 完整提案 Tab */}
           {activeTab === 'fullProposal' && (
-            <div className="space-y-6">
+            <div id="tabpanel-fullProposal" role="tabpanel" className="space-y-6">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">
                   {t.proposalMachine.fullProposal.title}
@@ -375,6 +384,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('targetCompany', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.customerNamePlaceholder}
+                    maxLength={100}
                   />
                 </div>
                 <div>
@@ -387,6 +397,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('targetIndustry', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.customerIndustryPlaceholder}
+                    maxLength={100}
                   />
                 </div>
               </div>
@@ -402,6 +413,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('companySize', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.companySizePlaceholder}
+                    maxLength={100}
                   />
                 </div>
                 <div>
@@ -414,6 +426,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('budget', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.budgetPlaceholder}
+                    maxLength={100}
                   />
                 </div>
               </div>
@@ -428,6 +441,7 @@ ${companyInfo}`;
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   rows={3}
                   placeholder={t.proposalMachine.fullProposal.customerNeedsPlaceholder}
+                  maxLength={2000}
                 />
               </div>
 
@@ -442,6 +456,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('timeline', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.timelinePlaceholder}
+                    maxLength={100}
                   />
                 </div>
                 <div>
@@ -454,6 +469,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('competitors', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.competitorsPlaceholder}
+                    maxLength={200}
                   />
                 </div>
               </div>
@@ -470,7 +486,7 @@ ${companyInfo}`;
 
           {/* 快速提案 Tab */}
           {activeTab === 'quickProposal' && (
-            <div className="space-y-6">
+            <div id="tabpanel-quickProposal" role="tabpanel" className="space-y-6">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">
                   {t.proposalMachine.quickProposal.title}
@@ -491,6 +507,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('targetCompany', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.customerNamePlaceholder}
+                    maxLength={100}
                   />
                 </div>
                 <div>
@@ -503,6 +520,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('targetIndustry', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.customerIndustryPlaceholder}
+                    maxLength={100}
                   />
                 </div>
               </div>
@@ -517,6 +535,7 @@ ${companyInfo}`;
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   rows={2}
                   placeholder={t.proposalMachine.quickProposal.scenarioPlaceholder}
+                  maxLength={1000}
                 />
               </div>
 
@@ -530,6 +549,7 @@ ${companyInfo}`;
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   rows={2}
                   placeholder={t.proposalMachine.quickProposal.keyPointsPlaceholder}
+                  maxLength={1000}
                 />
               </div>
 
@@ -545,7 +565,7 @@ ${companyInfo}`;
 
           {/* 簡報大綱 Tab */}
           {activeTab === 'presentation' && (
-            <div className="space-y-6">
+            <div id="tabpanel-presentation" role="tabpanel" className="space-y-6">
               <div>
                 <h2 className="text-lg font-semibold text-gray-900">
                   {t.proposalMachine.presentation.title}
@@ -566,6 +586,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('targetCompany', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.customerNamePlaceholder}
+                    maxLength={100}
                   />
                 </div>
                 <div>
@@ -578,6 +599,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('targetIndustry', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.fullProposal.customerIndustryPlaceholder}
+                    maxLength={100}
                   />
                 </div>
               </div>
@@ -592,6 +614,7 @@ ${companyInfo}`;
                   onChange={(e) => updateInput('topic', e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder={t.proposalMachine.presentation.topicPlaceholder}
+                  maxLength={200}
                 />
               </div>
 
@@ -606,6 +629,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('audience', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.presentation.audiencePlaceholder}
+                    maxLength={100}
                   />
                 </div>
                 <div>
@@ -618,6 +642,7 @@ ${companyInfo}`;
                     onChange={(e) => updateInput('duration', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder={t.proposalMachine.presentation.durationPlaceholder}
+                    maxLength={100}
                   />
                 </div>
               </div>
@@ -632,6 +657,7 @@ ${companyInfo}`;
                   onChange={(e) => updateInput('style', e.target.value)}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder={t.proposalMachine.presentation.stylePlaceholder}
+                  maxLength={100}
                 />
               </div>
 
@@ -656,6 +682,7 @@ ${companyInfo}`;
               <div className="flex gap-2">
                 <button
                   onClick={handleCopy}
+                  aria-label={t.proposalMachine.result.copyResult}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                     copied
                       ? 'bg-green-100 text-green-700'
@@ -684,12 +711,12 @@ ${companyInfo}`;
 
             {/* 使用說明 */}
             <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
-              <h4 className="text-sm font-medium text-blue-800 mb-2">使用說明</h4>
+              <h4 className="text-sm font-medium text-blue-800 mb-2">{t.proposalMachine.usage.title}</h4>
               <ol className="text-sm text-blue-700 space-y-1 list-decimal list-inside">
-                <li>點擊「複製提案」按鈕複製上方 Prompt</li>
-                <li>前往 <a href="https://manus.im/" target="_blank" rel="noopener noreferrer" className="underline">Manus.im</a> 並貼上 Prompt</li>
-                <li>Manus 會自動搜尋客戶資料並產出完整提案</li>
-                <li>等待 2-5 分鐘後即可下載 Word/PDF 格式提案</li>
+                <li>{t.proposalMachine.usage.step1}</li>
+                <li>{t.proposalMachine.usage.step2}</li>
+                <li>{t.proposalMachine.usage.step3}</li>
+                <li>{t.proposalMachine.usage.step4}</li>
               </ol>
             </div>
           </div>

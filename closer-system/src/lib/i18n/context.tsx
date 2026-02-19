@@ -23,6 +23,30 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  // html lang 動態切換
+  useEffect(() => {
+    const langMap: Record<Language, string> = {
+      'zh-TW': 'zh-Hant-TW',
+      'zh-CN': 'zh-Hans-CN',
+      'en': 'en',
+      'ms': 'ms',
+      'ja': 'ja',
+      'ko': 'ko',
+    };
+    document.documentElement.lang = langMap[language] || 'en';
+  }, [language]);
+
+  // 多 tab 同步：監聽其他 tab 的語言變更
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'closer_language' && e.newValue && e.newValue in translations) {
+        setLanguageState(e.newValue as Language);
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem('closer_language', lang);

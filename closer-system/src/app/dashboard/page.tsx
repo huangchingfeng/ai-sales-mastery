@@ -193,18 +193,18 @@ export default function DashboardPage() {
           <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <p className="text-sm text-gray-500">{t.dashboard.stats.aiPrompts}</p>
             <p className="text-2xl font-bold text-gray-900 mt-1">
-              {profileComplete ? '5' : '0'}
+              {profileComplete ? '\u2713' : '-'}
             </p>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <p className="text-sm text-gray-500">{t.dashboard.stats.gems}</p>
             <p className="text-2xl font-bold text-gray-900 mt-1">
-              {profileComplete ? '5' : '0'}
+              {profileComplete ? '\u2713' : '-'}
             </p>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <p className="text-sm text-gray-500">{t.dashboard.stats.modules}</p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">1/4</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">{profileComplete ? '1' : '0'}/4</p>
           </div>
           <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <p className="text-sm text-gray-500">{t.dashboard.stats.status}</p>

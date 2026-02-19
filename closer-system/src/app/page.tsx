@@ -5,17 +5,25 @@ import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/lib/i18n/context';
 import { useAuth } from '@/contexts/AuthContext';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { validateInviteCode, markInviteCodeAsUsed } from '@/lib/firebase/inviteCodes';
 
 export default function LoginPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [inviteCode, setInviteCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { t } = useLanguage();
   const { user, loading: authLoading, signIn, signUp } = useAuth();
+
+  // 標記元件已掛載（解決 SSG 預渲染問題）
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // 已登入則跳轉到 Dashboard
   useEffect(() => {
@@ -32,11 +40,27 @@ export default function LoginPage() {
     try {
       if (isSignUp) {
         if (!name.trim()) {
-          throw new Error('請輸入姓名');
+          throw new Error(t.register?.nameRequired || 'Please enter your name');
         }
-        await signUp(email, password, name);
+        if (!inviteCode.trim()) {
+          throw new Error(t.register?.inviteCodeRequired || '請輸入註冊碼');
+        }
+
+        // 驗證註冊碼
+        const validation = await validateInviteCode(inviteCode, email.trim());
+        if (!validation.valid) {
+          throw new Error(validation.error || t.register?.invalidCode || '註冊碼無效或不符合');
+        }
+
+        // 註冊帳號
+        await signUp(email.trim(), password, name.trim());
+
+        // 標記註冊碼為已使用
+        if (validation.inviteCode) {
+          await markInviteCodeAsUsed(validation.inviteCode.id);
+        }
       } else {
-        await signIn(email, password);
+        await signIn(email.trim(), password);
       }
       // 登入成功會由 useEffect 處理跳轉
     } catch (err) {
@@ -51,13 +75,15 @@ export default function LoginPage() {
     setIsSignUp(!isSignUp);
     setError('');
     setName('');
+    setInviteCode('');
   };
 
-  // Loading 畫面
-  if (authLoading) {
+  // Loading 畫面（只有在客戶端掛載後才顯示）
+  // SSG 時 mounted=false，直接渲染登入表單，避免把「載入中...」寫死在 HTML
+  if (mounted && authLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-gray-500">載入中...</div>
+        <div role="status" aria-label="Loading" className="text-gray-500">{t.common.loading}</div>
       </div>
     );
   }
@@ -82,28 +108,30 @@ export default function LoginPage() {
         {/* Login/SignUp Card */}
         <div className="card">
           <h2 className="text-xl font-semibold text-gray-900 mb-6 text-center">
-            {isSignUp ? '學員註冊' : '學員登入'}
+            {isSignUp ? t.login.signUpTitle : t.login.signInTitle}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* 姓名欄位（只在註冊時顯示） */}
             {isSignUp && (
               <div>
-                <label className="form-label">姓名</label>
+                <label htmlFor="register-name" className="form-label">{t.register?.name || 'Name'}</label>
                 <input
+                  id="register-name"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="form-input"
-                  placeholder="請輸入姓名"
+                  placeholder={t.register?.namePlaceholder || 'Enter your name'}
                   required={isSignUp}
                 />
               </div>
             )}
 
             <div>
-              <label className="form-label">{t.login.email}</label>
+              <label htmlFor="login-email" className="form-label">{t.login.email}</label>
               <input
+                id="login-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -113,24 +141,42 @@ export default function LoginPage() {
               />
             </div>
 
+            {/* 註冊碼欄位（只在註冊時顯示） */}
+            {isSignUp && (
+              <div>
+                <label htmlFor="register-invite-code" className="form-label">{t.register?.inviteCode || '註冊碼'}</label>
+                <input
+                  id="register-invite-code"
+                  type="text"
+                  value={inviteCode}
+                  onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
+                  className="form-input"
+                  placeholder={t.register?.inviteCodePlaceholder || '請輸入 6 位數註冊碼'}
+                  maxLength={6}
+                  required={isSignUp}
+                />
+              </div>
+            )}
+
             <div>
-              <label className="form-label">{t.login.password}</label>
+              <label htmlFor="login-password" className="form-label">{t.login.password}</label>
               <input
+                id="login-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="form-input"
                 placeholder="••••••••"
                 required
-                minLength={6}
+                minLength={isSignUp ? 6 : undefined}
               />
               {isSignUp && (
-                <p className="text-xs text-gray-500 mt-1">密碼至少 6 個字元</p>
+                <p className="text-xs text-gray-500 mt-1">{t.register?.passwordHint || 'Password must be at least 6 characters'}</p>
               )}
             </div>
 
             {error && (
-              <div className="text-red-500 text-sm text-center">
+              <div role="alert" className="text-red-500 text-sm text-center">
                 {error}
               </div>
             )}
@@ -141,8 +187,8 @@ export default function LoginPage() {
               className="w-full btn-primary disabled:opacity-50"
             >
               {loading
-                ? (isSignUp ? '註冊中...' : t.login.loggingIn)
-                : (isSignUp ? '註冊' : t.login.loginButton)
+                ? (isSignUp ? (t.register?.signingUp || 'Signing up...') : t.login.loggingIn)
+                : (isSignUp ? (t.register?.signUp || 'Sign Up') : t.login.loginButton)
               }
             </button>
           </form>
@@ -152,24 +198,24 @@ export default function LoginPage() {
             <p className="text-sm text-gray-600 text-center">
               {isSignUp ? (
                 <>
-                  已有帳號？{' '}
+                  {t.login.hasAccount}{' '}
                   <button
                     type="button"
                     onClick={toggleMode}
                     className="text-blue-600 hover:text-blue-700 font-medium"
                   >
-                    登入
+                    {t.login.signIn}
                   </button>
                 </>
               ) : (
                 <>
-                  還沒有帳號？{' '}
+                  {t.login.noAccount}{' '}
                   <button
                     type="button"
                     onClick={toggleMode}
                     className="text-blue-600 hover:text-blue-700 font-medium"
                   >
-                    註冊
+                    {t.register?.signUp || 'Sign Up'}
                   </button>
                 </>
               )}

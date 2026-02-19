@@ -161,25 +161,16 @@ export default function FollowUpPage() {
     }
   };
 
-  // 取得關係程度中文
+  // 取得關係程度翻譯
   const getRelationshipText = (rel: string) => {
-    const map: Record<string, string> = {
-      stranger: '陌生',
-      normal: '普通',
-      familiar: '熟悉',
-      close: '很熟',
-    };
-    return map[rel] || rel;
+    const options = t.followUp?.form?.relationshipOptions;
+    return options?.[rel as keyof typeof options] || rel;
   };
 
-  // 取得平台中文
+  // 取得平台翻譯
   const getPlatformText = (platform: string) => {
-    const map: Record<string, string> = {
-      email: 'Email',
-      line: 'LINE',
-      whatsapp: 'WhatsApp',
-    };
-    return map[platform] || platform;
+    const options = t.followUp?.form?.platformOptions;
+    return options?.[platform as keyof typeof options] || platform;
   };
 
   // 產生會議後跟進 Prompt
@@ -227,11 +218,11 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
   // 產生沉默客戶喚醒 Prompt
   const generateSilentCustomerPrompt = () => {
     const approachMap: Record<string, string> = {
-      value: '分享一個對他有用的資訊',
-      trend: '提到產業趨勢或新聞',
-      greeting: '單純問候關心',
-      newService: '提到我們有新的服務/優惠',
-      other: formData.approachOther || '其他',
+      value: t.followUpPromptMaps.approach.value,
+      trend: t.followUpPromptMaps.approach.trend,
+      greeting: t.followUpPromptMaps.approach.greeting,
+      newService: t.followUpPromptMaps.approach.newService,
+      other: formData.approachOther || t.followUpPromptMaps.approach.other,
     };
 
     return `請幫我寫一封「沉默客戶喚醒」訊息。
@@ -265,16 +256,16 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
   // 產生節日問候 Prompt
   const generateHolidayPrompt = () => {
     const toneMap: Record<string, string> = {
-      formal: '正式祝福',
-      warm: '溫馨關懷',
-      humor: '輕鬆幽默',
-      simple: '簡單俐落',
+      formal: t.followUpPromptMaps.tone.formal,
+      warm: t.followUpPromptMaps.tone.warm,
+      humor: t.followUpPromptMaps.tone.humor,
+      simple: t.followUpPromptMaps.tone.simple,
     };
 
     const businessMap: Record<string, string> = {
-      none: '完全不提（純問候）',
-      light: '輕輕帶過（年後有空聊聊）',
-      clear: '明確提到（新年新方案）',
+      none: t.followUpPromptMaps.business.none,
+      light: t.followUpPromptMaps.business.light,
+      clear: t.followUpPromptMaps.business.clear,
     };
 
     return `請幫我寫一封「節日問候」訊息。
@@ -308,9 +299,9 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
   // 產生生日祝福 Prompt
   const generateBirthdayPrompt = () => {
     const toneMap: Record<string, string> = {
-      formal: '正式祝福',
-      personal: '溫馨個人化',
-      humor: '輕鬆幽默',
+      formal: t.followUpPromptMaps.birthdayTone.formal,
+      personal: t.followUpPromptMaps.birthdayTone.personal,
+      humor: t.followUpPromptMaps.birthdayTone.humor,
     };
 
     return `請幫我寫一封「生日祝福」訊息。
@@ -341,11 +332,11 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
   // 產生分享價值 Prompt
   const generateValueSharePrompt = () => {
     const typeMap: Record<string, string> = {
-      article: '文章',
-      report: '報告',
-      news: '新聞',
-      tool: '工具',
-      event: '活動',
+      article: t.followUpPromptMaps.shareType.article,
+      report: t.followUpPromptMaps.shareType.report,
+      news: t.followUpPromptMaps.shareType.news,
+      tool: t.followUpPromptMaps.shareType.tool,
+      event: t.followUpPromptMaps.shareType.event,
     };
 
     return `請幫我寫一封「分享價值」訊息。
@@ -439,10 +430,11 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
     setGeneratedPrompt(prompt);
   };
 
-  // 清除結果並切換情境
+  // 清除結果並切換情境，重置表單資料
   const handleScenarioChange = (scenario: ScenarioType) => {
     setActiveScenario(scenario);
     setGeneratedPrompt('');
+    setFormData(initialFormData);
   };
 
   // 返回情境選擇
@@ -456,7 +448,7 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="text-gray-500">{t.common.loading}</div>
+          <div role="status" aria-label="Loading" className="text-gray-500">{t.common.loading}</div>
         </div>
       </DashboardLayout>
     );
@@ -489,7 +481,7 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                     </h3>
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    {getScenarioDescription(scenario)}
+                    {t.followUp.scenarioDescriptions?.[scenario] || getScenarioDescriptionFallback(scenario)}
                   </p>
                   <div className="mt-4 flex items-center text-sm font-medium text-gray-500 group-hover:text-gray-700">
                     {t.followUp.form.startUsing}
@@ -515,7 +507,7 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                     <h2 className={`font-semibold ${scenarioConfig[activeScenario].colorClass}`}>
                       {t.followUp.scenarios[activeScenario]}
                     </h2>
-                    <p className="text-sm text-gray-600">{getScenarioDescription(activeScenario)}</p>
+                    <p className="text-sm text-gray-600">{t.followUp.scenarioDescriptions?.[activeScenario] || getScenarioDescriptionFallback(activeScenario)}</p>
                   </div>
                 </div>
                 <button
@@ -532,37 +524,42 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
               {/* 共用欄位 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="followup-customerName" className="block text-sm font-medium text-gray-700 mb-1">
                     {t.followUp.form.customerName} *
                   </label>
                   <input
+                    id="followup-customerName"
                     type="text"
                     value={formData.customerName}
                     onChange={(e) => updateField('customerName', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     placeholder={t.followUp.form.customerNamePlaceholder}
+                    maxLength={100}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="followup-companyName" className="block text-sm font-medium text-gray-700 mb-1">
                     {t.followUp.form.companyName}
                   </label>
                   <input
+                    id="followup-companyName"
                     type="text"
                     value={formData.customerCompany}
                     onChange={(e) => updateField('customerCompany', e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     placeholder={t.followUp.form.companyNamePlaceholder}
+                    maxLength={100}
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="followup-relationship" className="block text-sm font-medium text-gray-700 mb-1">
                     {t.followUp.form.relationship}
                   </label>
                   <select
+                    id="followup-relationship"
                     value={formData.relationship}
                     onChange={(e) => updateField('relationship', e.target.value as FollowUpFormData['relationship'])}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
@@ -574,10 +571,11 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="followup-platform" className="block text-sm font-medium text-gray-700 mb-1">
                     {t.followUp.form.platform}
                   </label>
                   <select
+                    id="followup-platform"
                     value={formData.platform}
                     onChange={(e) => updateField('platform', e.target.value as FollowUpFormData['platform'])}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
@@ -595,7 +593,7 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        會議日期
+                        {t.followUp.form.meetingDate}
                       </label>
                       <input
                         type="date"
@@ -606,51 +604,55 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        會議主題
+                        {t.followUp.form.meetingTopic}
                       </label>
                       <input
                         type="text"
                         value={formData.meetingTopic}
                         onChange={(e) => updateField('meetingTopic', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：AI 導入計畫討論"
+                        placeholder={t.followUp.form.meetingTopicPlaceholder}
+                        maxLength={200}
                       />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      會議重點（每行一個重點）
+                      {t.followUp.form.meetingPoints}
                     </label>
                     <textarea
                       value={formData.meetingPoints}
                       onChange={(e) => updateField('meetingPoints', e.target.value)}
                       rows={3}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="1. 第一個重點&#10;2. 第二個重點&#10;3. 第三個重點"
+                      placeholder={t.followUp.form.meetingPointsPlaceholder}
+                      maxLength={2000}
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      客戶提出的問題/疑慮
+                      {t.followUp.form.customerQuestions}
                     </label>
                     <textarea
                       value={formData.customerQuestions}
                       onChange={(e) => updateField('customerQuestions', e.target.value)}
                       rows={2}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="例：培訓時數是否可以調整？預算是否可以分期？"
+                      placeholder={t.followUp.form.customerQuestionsPlaceholder}
+                      maxLength={2000}
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      約定的下一步
+                      {t.followUp.form.nextStep}
                     </label>
                     <input
                       type="text"
                       value={formData.nextStep}
                       onChange={(e) => updateField('nextStep', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="例：本週五前提供正式報價"
+                      placeholder={t.followUp.form.nextStepPlaceholder}
+                      maxLength={200}
                     />
                   </div>
                 </>
@@ -662,7 +664,7 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        上次聯絡日期
+                        {t.followUp.form.lastContactDate}
                       </label>
                       <input
                         type="date"
@@ -673,40 +675,42 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        當時沒成交的原因
+                        {t.followUp.form.noCloseReason}
                       </label>
                       <input
                         type="text"
                         value={formData.noCloseReason}
                         onChange={(e) => updateField('noCloseReason', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：預算不足 / 時機不對 / 需要考慮"
+                        placeholder={t.followUp.form.noCloseReasonPlaceholder}
+                        maxLength={200}
                       />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      上次聊的內容
+                      {t.followUp.form.lastContentLabel}
                     </label>
                     <textarea
                       value={formData.lastContent}
                       onChange={(e) => updateField('lastContent', e.target.value)}
                       rows={2}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="例：討論過 AI 培訓方案，客戶表示 Q2 後再考慮"
+                      placeholder={t.followUp.form.lastContentPlaceholder}
+                      maxLength={1000}
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      切入點
+                      {t.followUp.form.approachType}
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                       {[
-                        { value: 'value', label: '分享有用資訊' },
-                        { value: 'trend', label: '產業趨勢/新聞' },
-                        { value: 'greeting', label: '單純問候關心' },
-                        { value: 'newService', label: '新服務/優惠' },
-                        { value: 'other', label: '其他' },
+                        { value: 'value', label: t.followUp.form.approachOptions?.value },
+                        { value: 'trend', label: t.followUp.form.approachOptions?.trend },
+                        { value: 'greeting', label: t.followUp.form.approachOptions?.greeting },
+                        { value: 'newService', label: t.followUp.form.approachOptions?.newService },
+                        { value: 'other', label: t.followUp.form.approachOptions?.other },
                       ].map((option) => (
                         <label
                           key={option.value}
@@ -734,7 +738,8 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                         value={formData.approachOther}
                         onChange={(e) => updateField('approachOther', e.target.value)}
                         className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="請描述你想用的切入點"
+                        placeholder={t.followUp.form.approachOtherPlaceholder}
+                        maxLength={200}
                       />
                     )}
                   </div>
@@ -747,39 +752,41 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        節日名稱
+                        {t.followUp.form.holidayName}
                       </label>
                       <input
                         type="text"
                         value={formData.holidayName}
                         onChange={(e) => updateField('holidayName', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：農曆新年 / 中秋節 / 聖誕節"
+                        placeholder={t.followUp.form.holidayNamePlaceholder}
+                        maxLength={100}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        上次互動
+                        {t.followUp.form.lastInteraction}
                       </label>
                       <input
                         type="text"
                         value={formData.lastContactDate}
                         onChange={(e) => updateField('lastContactDate', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：上個月開會 / 半年前合作"
+                        placeholder={t.followUp.form.lastInteractionPlaceholder}
+                        maxLength={100}
                       />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      傳達的感覺
+                      {t.followUp.form.feelingLabel}
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                       {[
-                        { value: 'formal', label: '正式祝福' },
-                        { value: 'warm', label: '溫馨關懷' },
-                        { value: 'humor', label: '輕鬆幽默' },
-                        { value: 'simple', label: '簡單俐落' },
+                        { value: 'formal', label: t.followUp.form.feelingOptions?.formal },
+                        { value: 'warm', label: t.followUp.form.feelingOptions?.warm },
+                        { value: 'humor', label: t.followUp.form.feelingOptions?.humor },
+                        { value: 'simple', label: t.followUp.form.feelingOptions?.simple },
                       ].map((option) => (
                         <label
                           key={option.value}
@@ -804,13 +811,13 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      是否提到業務
+                      {t.followUp.form.mentionBusiness}
                     </label>
                     <div className="grid grid-cols-3 gap-2">
                       {[
-                        { value: 'none', label: '完全不提' },
-                        { value: 'light', label: '輕輕帶過' },
-                        { value: 'clear', label: '明確提到' },
+                        { value: 'none', label: t.followUp.form.mentionBusinessOptions?.none },
+                        { value: 'light', label: t.followUp.form.mentionBusinessOptions?.light },
+                        { value: 'clear', label: t.followUp.form.mentionBusinessOptions?.clear },
                       ].map((option) => (
                         <label
                           key={option.value}
@@ -841,13 +848,13 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                 <>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      傳達的感覺
+                      {t.followUp.form.feelingLabel}
                     </label>
                     <div className="grid grid-cols-3 gap-2">
                       {[
-                        { value: 'formal', label: '正式祝福' },
-                        { value: 'personal', label: '溫馨個人化' },
-                        { value: 'humor', label: '輕鬆幽默' },
+                        { value: 'formal', label: t.followUp.form.birthdayFeelingOptions?.formal },
+                        { value: 'personal', label: t.followUp.form.birthdayFeelingOptions?.personal },
+                        { value: 'humor', label: t.followUp.form.birthdayFeelingOptions?.humor },
                       ].map((option) => (
                         <label
                           key={option.value}
@@ -872,14 +879,15 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      客戶的興趣/特點（選填，讓祝福更個人化）
+                      {t.followUp.form.customerInterests}
                     </label>
                     <input
                       type="text"
                       value={formData.customerInterests}
                       onChange={(e) => updateField('customerInterests', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="例：愛喝咖啡 / 喜歡高爾夫 / 有兩個小孩"
+                      placeholder={t.followUp.form.customerInterestsPlaceholder}
+                      maxLength={200}
                     />
                   </div>
                 </>
@@ -891,40 +899,42 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        客戶產業
+                        {t.followUp.form.customerIndustry}
                       </label>
                       <input
                         type="text"
                         value={formData.customerIndustry}
                         onChange={(e) => updateField('customerIndustry', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：製造業 / 金融業"
+                        placeholder={t.followUp.form.customerIndustryPlaceholder}
+                        maxLength={100}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        他關心的議題
+                        {t.followUp.form.customerTopics}
                       </label>
                       <input
                         type="text"
                         value={formData.customerTopics}
                         onChange={(e) => updateField('customerTopics', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：數位轉型 / AI 應用 / 效率提升"
+                        placeholder={t.followUp.form.customerTopicsPlaceholder}
+                        maxLength={200}
                       />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      分享內容類型
+                      {t.followUp.form.shareTypeLabel}
                     </label>
                     <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
                       {[
-                        { value: 'article', label: '文章' },
-                        { value: 'report', label: '報告' },
-                        { value: 'news', label: '新聞' },
-                        { value: 'tool', label: '工具' },
-                        { value: 'event', label: '活動' },
+                        { value: 'article', label: t.followUp.form.shareTypeOptions?.article },
+                        { value: 'report', label: t.followUp.form.shareTypeOptions?.report },
+                        { value: 'news', label: t.followUp.form.shareTypeOptions?.news },
+                        { value: 'tool', label: t.followUp.form.shareTypeOptions?.tool },
+                        { value: 'event', label: t.followUp.form.shareTypeOptions?.event },
                       ].map((option) => (
                         <label
                           key={option.value}
@@ -949,38 +959,41 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      標題或主題
+                      {t.followUp.form.shareTitle}
                     </label>
                     <input
                       type="text"
                       value={formData.shareTitle}
                       onChange={(e) => updateField('shareTitle', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="例：2026 製造業 AI 應用趨勢報告"
+                      placeholder={t.followUp.form.shareTitlePlaceholder}
+                      maxLength={200}
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      為什麼對他有用
+                      {t.followUp.form.shareReason}
                     </label>
                     <textarea
                       value={formData.shareReason}
                       onChange={(e) => updateField('shareReason', e.target.value)}
                       rows={2}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="例：裡面提到的 ROI 數據跟他之前問的很相關"
+                      placeholder={t.followUp.form.shareReasonPlaceholder}
+                      maxLength={1000}
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      連結（選填）
+                      {t.followUp.form.shareLink}
                     </label>
                     <input
                       type="url"
                       value={formData.shareLink}
                       onChange={(e) => updateField('shareLink', e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="https://..."
+                      placeholder={t.followUp.form.shareLinkPlaceholder}
+                      maxLength={500}
                     />
                   </div>
                 </>
@@ -992,64 +1005,69 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        合作多久
+                        {t.followUp.form.cooperationDuration}
                       </label>
                       <input
                         type="text"
                         value={formData.cooperationDuration}
                         onChange={(e) => updateField('cooperationDuration', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：半年 / 一年 / 三年"
+                        placeholder={t.followUp.form.cooperationDurationPlaceholder}
+                        maxLength={100}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        合作成果
+                        {t.followUp.form.cooperationResult}
                       </label>
                       <input
                         type="text"
                         value={formData.cooperationResult}
                         onChange={(e) => updateField('cooperationResult', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：效率提升 30% / 營收成長 20%"
+                        placeholder={t.followUp.form.cooperationResultPlaceholder}
+                        maxLength={200}
                       />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      希望介紹的對象描述
+                      {t.followUp.form.referralTarget}
                     </label>
                     <textarea
                       value={formData.referralTarget}
                       onChange={(e) => updateField('referralTarget', e.target.value)}
                       rows={2}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                      placeholder="例：正在考慮 AI 培訓的企業主 / 想提升團隊效率的主管"
+                      placeholder={t.followUp.form.referralTargetPlaceholder}
+                      maxLength={500}
                     />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        希望的產業（選填）
+                        {t.followUp.form.referralIndustry}
                       </label>
                       <input
                         type="text"
                         value={formData.referralIndustry}
                         onChange={(e) => updateField('referralIndustry', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：科技業 / 製造業"
+                        placeholder={t.followUp.form.referralIndustryPlaceholder}
+                        maxLength={100}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        希望的職位（選填）
+                        {t.followUp.form.referralPosition}
                       </label>
                       <input
                         type="text"
                         value={formData.referralPosition}
                         onChange={(e) => updateField('referralPosition', e.target.value)}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：HR主管 / 業務主管"
+                        placeholder={t.followUp.form.referralPositionPlaceholder}
+                        maxLength={100}
                       />
                     </div>
                   </div>
@@ -1062,7 +1080,7 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                         className="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
                       />
                       <span className="text-sm font-medium text-gray-700">
-                        我有提供轉介紹獎勵
+                        {t.followUp.form.hasReward}
                       </span>
                     </label>
                     {formData.hasReward && (
@@ -1071,7 +1089,8 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
                         value={formData.rewardContent}
                         onChange={(e) => updateField('rewardContent', e.target.value)}
                         className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                        placeholder="例：成交後提供 10% 回饋金 / 免費顧問諮詢一次"
+                        placeholder={t.followUp.form.rewardContentPlaceholder}
+                        maxLength={200}
                       />
                     )}
                   </div>
@@ -1102,6 +1121,7 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
               <div className="flex gap-2">
                 <button
                   onClick={copyToClipboard}
+                  aria-label={t.followUp.result.copyMessage}
                   className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
                     isCopied
                       ? 'bg-green-100 text-green-700'
@@ -1145,8 +1165,8 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
         {(!userProfile.name || !userProfile.toneStyle) && activeScenario && (
           <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-sm text-yellow-800">
-              <span className="font-medium">提示：</span>
-              建議先到「內容分身術」模組填寫你的基本資料和說話風格，讓 AI 能產出更貼近你風格的訊息。
+              <span className="font-medium">{t.common.tip || '提示'}：</span>
+              {t.followUp.profileWarning || '建議先到「內容分身術」模組填寫你的基本資料和說話風格，讓 AI 能產出更貼近你風格的訊息。'}
             </p>
           </div>
         )}
@@ -1155,15 +1175,15 @@ ${userProfile.catchphrases ? `- 常用語/口頭禪：${userProfile.catchphrases
   );
 }
 
-// 取得情境描述
-function getScenarioDescription(scenario: ScenarioType): string {
+// 取得情境描述 fallback - 用於 translations 未定義的情況
+function getScenarioDescriptionFallback(scenario: ScenarioType): string {
   const descriptions: Record<ScenarioType, string> = {
-    postMeeting: '剛開完會，當天或隔天發送感謝訊息，整理重點並推進下一步',
-    silentCustomer: '客戶 1-3 個月沒聯絡，重新建立連結，不要太銷售',
-    holiday: '新年、中秋、聖誕等節日問候，維繫關係讓客戶記得你',
-    birthday: '客戶生日當天或前一天，個人化關懷建立情感連結',
-    valueShare: '看到對客戶有用的資訊，提供價值維持存在感',
-    referral: '客戶合作順利時，請他幫忙介紹擴大業務範圍',
+    postMeeting: 'Send a thank you message after meeting to summarize key points and push next steps',
+    silentCustomer: 'Re-establish connection with inactive customer without being too salesy',
+    holiday: 'Holiday greetings to maintain relationship and stay memorable',
+    birthday: 'Personalized birthday wishes to build emotional connection',
+    valueShare: 'Share useful information to provide value and maintain presence',
+    referral: 'Ask for referrals when customer relationship is good',
   };
   return descriptions[scenario];
 }

@@ -23,6 +23,7 @@ export default function ResultPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
+  const [noProfile, setNoProfile] = useState(false);
   const router = useRouter();
   const { t } = useLanguage();
   const { user, loading: authLoading } = useAuth();
@@ -47,7 +48,7 @@ export default function ResultPage() {
       }
 
       if (!savedProfile) {
-        router.push('/content-clone');
+        setNoProfile(true);
         return;
       }
 
@@ -93,11 +94,34 @@ export default function ResultPage() {
     return labels[type as keyof typeof labels] || type;
   };
 
+  // 沒有 profile 資料時顯示提示並導回
+  if (noProfile) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto p-8">
+          <div className="text-4xl mb-4">📝</div>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">
+            {t.results?.noProfileTitle || '尚未填寫資料'}
+          </h2>
+          <p className="text-sm text-gray-500 mb-6">
+            {t.results?.noProfileDescription || '請先完成「內容分身術」的資料填寫，才能產生專屬 Gem。'}
+          </p>
+          <button
+            onClick={() => router.push('/content-clone')}
+            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            {t.results?.goToContentClone || '前往填寫資料'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (!gems || !profile) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div role="status" aria-label="Loading" className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-500">{t.common.loading}</p>
         </div>
       </div>
@@ -110,9 +134,20 @@ export default function ResultPage() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">{t.results.title}</h1>
-              <p className="text-sm text-gray-500">Hi {profile.name}，{t.results.subtitle}</p>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push('/dashboard')}
+                className="text-sm text-gray-400 hover:text-gray-700 transition-colors"
+                aria-label={t.sidebar.dashboard}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">{t.results.title}</h1>
+                <p className="text-sm text-gray-500">Hi {profile.name}，{t.results.subtitle}</p>
+              </div>
             </div>
             <div className="flex items-center gap-4">
               <LanguageSwitcher />
@@ -184,6 +219,7 @@ export default function ResultPage() {
                     </button>
                     <button
                       onClick={() => copyToClipboard(gem.systemPrompt, gem.id)}
+                      aria-label={t.results.copyGemPrompt}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                         copiedId === gem.id
                           ? 'bg-green-500 text-white'
@@ -217,7 +253,7 @@ export default function ResultPage() {
                 {expandedId === gem.id && (
                   <div className="mt-4 pt-4 border-t border-gray-100">
                     <h4 className="text-sm font-medium text-gray-700 mb-2">
-                      Gem 系統提示詞
+                      {t.results?.systemPromptTitle || 'Gem 系統提示詞'}
                     </h4>
                     <div className="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
                       <pre className="whitespace-pre-wrap text-sm text-gray-700 font-mono leading-relaxed">
@@ -271,8 +307,8 @@ export default function ResultPage() {
       {/* Footer */}
       <footer className="border-t border-gray-200 bg-white mt-12">
         <div className="max-w-4xl mx-auto px-4 py-6 text-center text-sm text-gray-500">
-          <p>CLOSER 業績自動倍增 by Afeng Huang</p>
-          <p className="mt-1">ai@autolab.cloud</p>
+          <p>{t.footer.text}</p>
+          <p className="mt-1">{t.footer.email}</p>
         </div>
       </footer>
     </div>

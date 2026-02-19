@@ -12,9 +12,21 @@ export default function ContentClonePage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<UserProfile>(emptyProfile);
   const [isLoading, setIsLoading] = useState(true);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const router = useRouter();
   const { t, language } = useLanguage();
   const { user, loading: authLoading } = useAuth();
+
+  // 攔截瀏覽器返回鍵，回到上一步而非離開頁面
+  useEffect(() => {
+    const handlePopState = () => {
+      if (currentStep > 1) {
+        setCurrentStep(prev => prev - 1);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [currentStep]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -49,7 +61,29 @@ export default function ContentClonePage() {
   };
 
   const handleNext = async () => {
+    // 驗證必填欄位
+    const newErrors: Record<string, string> = {};
+    if (currentStep === 1) {
+      if (!formData.name.trim()) {
+        newErrors.name = t.register?.nameRequired || 'Name is required';
+      }
+      if (!formData.industry) {
+        newErrors.industry = t.validation.industryRequired;
+      }
+    }
+    if (currentStep === 2) {
+      if (!formData.productService.trim()) {
+        newErrors.productService = t.validation.productRequired;
+      }
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+
     if (currentStep < 5) {
+      window.history.pushState({ step: currentStep + 1 }, '');
       setCurrentStep(prev => prev + 1);
     } else {
       // 儲存資料到雲端或本地（包含當前語言設定）
@@ -95,7 +129,7 @@ export default function ContentClonePage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-gray-500">{t.common.loading}</div>
+        <div role="status" aria-label="Loading" className="text-gray-500">{t.common.loading}</div>
       </div>
     );
   }
@@ -106,9 +140,20 @@ export default function ContentClonePage() {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">{t.contentClone.title}</h1>
-              <p className="text-sm text-gray-500">{t.contentClone.subtitle}</p>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push('/dashboard')}
+                className="text-sm text-gray-400 hover:text-gray-700 transition-colors"
+                aria-label={t.sidebar.dashboard}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">{t.contentClone.title}</h1>
+                <p className="text-sm text-gray-500">{t.contentClone.subtitle}</p>
+              </div>
             </div>
             <div className="flex items-center gap-4">
               <LanguageSwitcher />
@@ -123,13 +168,13 @@ export default function ContentClonePage() {
       {/* Progress Steps */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-4 py-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between" role="list" aria-label="Progress steps">
             {STEPS.map((step) => (
-              <div key={step.id} className="flex flex-col items-center">
+              <div key={step.id} className="flex flex-col items-center" role="listitem" aria-current={currentStep === step.id ? 'step' : undefined}>
                 <div className={`step-indicator ${
                   currentStep === step.id ? 'step-active' :
                   currentStep > step.id ? 'step-completed' : 'step-pending'
-                }`}>
+                }`} aria-label={`${step.name} - ${currentStep > step.id ? 'completed' : currentStep === step.id ? 'current' : 'pending'}`}>
                   {currentStep > step.id ? '✓' : step.letter}
                 </div>
                 <span className={`text-xs mt-1 ${
@@ -155,44 +200,52 @@ export default function ContentClonePage() {
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step1.name}</label>
+                <label htmlFor="clone-name" className="form-label">{t.contentClone.step1.name}</label>
                 <input
+                  id="clone-name"
                   type="text"
                   value={formData.name}
                   onChange={(e) => updateField('name', e.target.value)}
-                  className="form-input"
+                  className={`form-input ${errors.name ? 'border-red-500' : ''}`}
                   placeholder={t.contentClone.step1.namePlaceholder}
+                  maxLength={100}
                 />
+                {errors.name && <p role="alert" className="text-red-500 text-sm mt-1">{errors.name}</p>}
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step1.industry}</label>
+                <label htmlFor="clone-industry" className="form-label">{t.contentClone.step1.industry}</label>
                 <select
+                  id="clone-industry"
                   value={formData.industry}
                   onChange={(e) => updateField('industry', e.target.value)}
-                  className="form-input"
+                  className={`form-input ${errors.industry ? 'border-red-500' : ''}`}
                 >
                   <option value="">{t.contentClone.step1.industryPlaceholder}</option>
                   {t.industries.map(industry => (
                     <option key={industry} value={industry}>{industry}</option>
                   ))}
                 </select>
+                {errors.industry && <p role="alert" className="text-red-500 text-sm mt-1">{errors.industry}</p>}
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step1.jobTitle}</label>
+                <label htmlFor="clone-jobTitle" className="form-label">{t.contentClone.step1.jobTitle}</label>
                 <input
+                  id="clone-jobTitle"
                   type="text"
                   value={formData.jobTitle}
                   onChange={(e) => updateField('jobTitle', e.target.value)}
                   className="form-input"
                   placeholder={t.contentClone.step1.jobTitlePlaceholder}
+                  maxLength={100}
                 />
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step1.experience}</label>
+                <label htmlFor="clone-experience" className="form-label">{t.contentClone.step1.experience}</label>
                 <select
+                  id="clone-experience"
                   value={formData.yearsExperience}
                   onChange={(e) => updateField('yearsExperience', e.target.value)}
                   className="form-input"
@@ -215,30 +268,36 @@ export default function ContentClonePage() {
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step2.product}</label>
+                <label htmlFor="clone-product" className="form-label">{t.contentClone.step2.product}</label>
                 <textarea
+                  id="clone-product"
                   value={formData.productService}
                   onChange={(e) => updateField('productService', e.target.value)}
-                  className="form-textarea"
+                  className={`form-textarea ${errors.productService ? 'border-red-500' : ''}`}
                   rows={4}
                   placeholder={t.contentClone.step2.productPlaceholder}
+                  maxLength={500}
                 />
+                {errors.productService && <p role="alert" className="text-red-500 text-sm mt-1">{errors.productService}</p>}
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step2.advantage}</label>
+                <label htmlFor="clone-advantage" className="form-label">{t.contentClone.step2.advantage}</label>
                 <textarea
+                  id="clone-advantage"
                   value={formData.productAdvantage}
                   onChange={(e) => updateField('productAdvantage', e.target.value)}
                   className="form-textarea"
                   rows={3}
                   placeholder={t.contentClone.step2.advantagePlaceholder}
+                  maxLength={500}
                 />
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step2.price}</label>
+                <label htmlFor="clone-price" className="form-label">{t.contentClone.step2.price}</label>
                 <select
+                  id="clone-price"
                   value={formData.priceRange}
                   onChange={(e) => updateField('priceRange', e.target.value)}
                   className="form-input"
@@ -261,13 +320,15 @@ export default function ContentClonePage() {
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step3.idealCustomer}</label>
+                <label htmlFor="clone-idealCustomer" className="form-label">{t.contentClone.step3.idealCustomer}</label>
                 <textarea
+                  id="clone-idealCustomer"
                   value={formData.idealCustomer}
                   onChange={(e) => updateField('idealCustomer', e.target.value)}
                   className="form-textarea"
                   rows={3}
                   placeholder={t.contentClone.step3.idealCustomerPlaceholder}
+                  maxLength={500}
                 />
               </div>
 
@@ -299,6 +360,7 @@ export default function ContentClonePage() {
                       onChange={(e) => updateQuestion(index, e.target.value)}
                       className="form-input"
                       placeholder={`${t.contentClone.step3.questionPlaceholder} ${index + 1}`}
+                      maxLength={200}
                     />
                   ))}
                 </div>
@@ -341,35 +403,41 @@ export default function ContentClonePage() {
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step4.catchphrases}</label>
+                <label htmlFor="clone-catchphrases" className="form-label">{t.contentClone.step4.catchphrases}</label>
                 <textarea
+                  id="clone-catchphrases"
                   value={formData.catchphrases}
                   onChange={(e) => updateField('catchphrases', e.target.value)}
                   className="form-textarea"
                   rows={2}
                   placeholder={t.contentClone.step4.catchphrasesPlaceholder}
+                  maxLength={500}
                 />
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step4.avoidWords}</label>
+                <label htmlFor="clone-avoidWords" className="form-label">{t.contentClone.step4.avoidWords}</label>
                 <input
+                  id="clone-avoidWords"
                   type="text"
                   value={formData.avoidWords}
                   onChange={(e) => updateField('avoidWords', e.target.value)}
                   className="form-input"
                   placeholder={t.contentClone.step4.avoidWordsPlaceholder}
+                  maxLength={200}
                 />
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step4.sampleWriting}</label>
+                <label htmlFor="clone-sampleWriting" className="form-label">{t.contentClone.step4.sampleWriting}</label>
                 <textarea
+                  id="clone-sampleWriting"
                   value={formData.sampleWriting}
                   onChange={(e) => updateField('sampleWriting', e.target.value)}
                   className="form-textarea"
                   rows={4}
                   placeholder={t.contentClone.step4.sampleWritingPlaceholder}
+                  maxLength={2000}
                 />
               </div>
             </div>
@@ -434,13 +502,15 @@ export default function ContentClonePage() {
               </div>
 
               <div>
-                <label className="form-label">{t.contentClone.step5.cta}</label>
+                <label htmlFor="clone-cta" className="form-label">{t.contentClone.step5.cta}</label>
                 <input
+                  id="clone-cta"
                   type="text"
                   value={formData.cta}
                   onChange={(e) => updateField('cta', e.target.value)}
                   className="form-input"
                   placeholder={t.contentClone.step5.ctaPlaceholder}
+                  maxLength={200}
                 />
               </div>
             </div>

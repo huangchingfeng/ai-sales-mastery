@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/lib/i18n/context';
@@ -15,6 +15,11 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const router = useRouter();
   const { user, loading } = useAuth();
   const { t } = useLanguage();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // 認證檢查：未登入跳轉首頁
   useEffect(() => {
@@ -23,8 +28,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     }
   }, [user, loading, router]);
 
-  // 載入中畫面
-  if (loading) {
+  // 載入中畫面（含 SSG hydration 保護）
+  if (!mounted || loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">

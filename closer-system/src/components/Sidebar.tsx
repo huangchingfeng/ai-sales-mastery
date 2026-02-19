@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/lib/i18n/context';
+import { isAdminEmail } from '@/lib/firebase/inviteCodes';
 
 interface NavItem {
   href: string;
@@ -18,6 +19,9 @@ export default function Sidebar() {
   const pathname = usePathname();
   const { user, signOut } = useAuth();
   const { t } = useLanguage();
+
+  // 檢查是否為 Admin（使用 Email 白名單，同步檢查）
+  const isAdminUser = user?.email ? isAdminEmail(user.email) : false;
 
   const navItems: NavItem[] = [
     {
@@ -135,7 +139,7 @@ export default function Sidebar() {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate">
-                  {user?.displayName || '使用者'}
+                  {user?.displayName || t.sidebar.defaultUser}
                 </p>
                 <p className="text-xs text-gray-500 truncate">
                   {user?.email}
@@ -202,6 +206,26 @@ export default function Sidebar() {
               <span className="text-xl">👤</span>
               <span className="font-medium">{t.sidebar.myProfile}</span>
             </Link>
+
+            {/* Admin Link (只對 admin 顯示) */}
+            {isAdminUser && (
+              <Link
+                href="/admin"
+                onClick={() => setIsOpen(false)}
+                className={`
+                  flex items-center gap-3 px-4 py-3 rounded-lg mt-2
+                  transition-colors duration-200
+                  ${
+                    pathname === '/admin'
+                      ? 'bg-purple-50 text-purple-600'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }
+                `}
+              >
+                <span className="text-xl">⚙️</span>
+                <span className="font-medium">{t.admin?.title || '管理後台'}</span>
+              </Link>
+            )}
           </nav>
 
           {/* Logout Button */}

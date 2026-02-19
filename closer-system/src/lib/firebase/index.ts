@@ -21,3 +21,40 @@ export {
   hasUserProfile,
   type StoredUserProfile,
 } from './firestore';
+
+// Admin 相關函數
+export {
+  checkIsAdmin,
+  getUserData,
+  setUserData,
+  generateInviteCode,
+  validateInviteCode,
+  getInviteCodeByCode,
+  markInviteCodeUsed,
+  getAllInviteCodes,
+  deleteInviteCode,
+  isAdminEmail,
+  initializeUserData,
+  type UserRole,
+  type UserData,
+  type InviteCode,
+} from './admin';
+
+// 課程相關函數
+export {
+  createCourse,
+  getAllCourses,
+  getCourseById,
+  getCourseByName,
+  updateCourseStudentCount,
+  getOrCreateCourse,
+  type Course,
+} from './courses';
+
+// 註冊碼相關函數（從 inviteCodes.ts）
+export {
+  createInviteCode,
+  getInviteCodesByCourse,
+  getInviteCodeByEmailAndCourse,
+  isAdmin,
+} from './inviteCodes';
